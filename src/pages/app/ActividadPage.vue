@@ -55,8 +55,8 @@ export default {
         this.evaluations.push({
           id: snapItem.id,
           unit: item.unit,
-          tea_mork: item.team_work,
-          timings: item.timings,
+          teamork: item.team_work,
+          timing: item.timings,
           excellence: item.excellence,
           presentation: item.presentation
         })

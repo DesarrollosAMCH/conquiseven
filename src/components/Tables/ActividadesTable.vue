@@ -13,8 +13,14 @@
         >
           <template slot="items" slot-scope="props">
             <td class="text-xs-left">{{ props.item.name }}</td>
+            <td class="text-xs-left">{{ props.item.code.toUpperCase() }}</td>
             <td class="text-xs-left">{{ props.item.time }}</td>
             <!--<td class="text-xs-left" v-if="typeof props.item.category == 'string'">{{ props.item.category }}</td>-->
+            <td class="text-xs-left">
+              <a @click="redirect('/evaluar/'+props.item.id)" :title="'Evaluar '+props.item.name">
+                <md-icon>assignment</md-icon>
+              </a>
+            </td>
           </template>
         </v-data-table>
       </div>
@@ -43,7 +49,9 @@ export default {
     return {
       headers: [
         {text: 'Nombre', value: 'name', align: 'left'},
-        {text: 'Tiempo (mins)', value: 'time', align: 'left'}
+        {text: 'Código', value: 'code', align: 'left'},
+        {text: 'Tiempo (mins)', value: 'time', align: 'left'},
+        {text: 'Evaluar', value: 'time', align: 'left'}
         // {text: 'Categoria', value: 'category', align: 'left'}
       ]
     }

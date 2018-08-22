@@ -32,7 +32,7 @@ export default {
   },
   mounted () {
     this.loading = true
-    db.collection('clubs').orderBy('zone').onSnapshot(snapshot => {
+    db.collection('clubs').orderBy('name').onSnapshot(snapshot => {
       this.clubes = []
       snapshot.forEach(snapItem => {
         const item = snapItem.data()

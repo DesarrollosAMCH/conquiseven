@@ -25,7 +25,7 @@
         <md-icon>bubble_chart</md-icon>
         <p>Eventos</p>
       </sidebar-link>
-      <sidebar-link to="/evaluar/TU6WCJnqM0lMvZ5EMIyL">
+      <sidebar-link to="/evaluar">
         <md-icon>assignment</md-icon>
         <p>Evaluar</p>
       </sidebar-link>

@@ -43,7 +43,9 @@ export default {
       })
 
       snapshot.forEach(snapItem => {
-        this.activities.push(snapItem.data())
+        var activity = snapItem.data()
+        activity.id = snapItem.id
+        this.activities.push(activity)
       })
       this.loading = false
     })

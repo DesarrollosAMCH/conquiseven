@@ -15,6 +15,7 @@ import EventosPage from '@/pages/admin/EventosPage'
 import EventosDetallePage from '@/pages/admin/EventosDetallePage'
 
 import EvaluarPage from '@/pages/app/EvaluarPage'
+import EvaluarActividadPage from '@/pages/app/EvaluarActividadPage'
 import ActividadPage from '@/pages/app/ActividadPage'
 
 const routes = [
@@ -94,9 +95,14 @@ const routes = [
        * * App Routes
        */
       {
-        path: 'evaluar/:activity',
-        name: 'Evaluar unidad',
+        path: 'evaluar/',
+        name: 'Evaluar',
         component: EvaluarPage
+      },
+      {
+        path: 'evaluar/:activity',
+        name: 'Evaluar Acividad',
+        component: EvaluarActividadPage
       },
       {
         path: 'actividad/:activity',
