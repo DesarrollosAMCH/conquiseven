@@ -8,13 +8,14 @@ export default {
   },
   methods: {
     turnOffloader: function (length) {
-      console.log('desde mixin')
       if (this.processed === length) {
         setTimeout(() => {
           this.loading = false
-          console.log(this.loading)
         }, 500)
       }
+    },
+    redirect: function (url) {
+      console.log(url)
     }
   }
 }

@@ -36,8 +36,8 @@ export default {
       type: Object
     },
     cardImage: {
-      type: String
-      // default: require('@/assets/img/faces/marc.jpg')
+      type: String,
+      default: require('@/assets/img/logo_convencion.png')
     },
     category: {
       type: String,

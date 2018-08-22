@@ -5,8 +5,10 @@
 
     <md-table v-model="units" :table-header-color="tableHeaderColor" v-else>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="Nombre">{{ item.name }}</md-table-cell>
-        <md-table-cell md-label="Fuerza">{{ item.members }}</md-table-cell>
+        <md-table-cell md-label="Unidad">{{ item.name }}</md-table-cell>
+        <!--<md-table-cell md-label="Fuerza">{{ item.members }}</md-table-cell>-->
+        <md-table-cell md-label="Club">{{ item.clubName }}</md-table-cell>
+        <md-table-cell md-label="Zona">{{ item.zoneName }}</md-table-cell>
         <md-table-cell md-label="Activo">
           <a>
             <md-icon v-if="item.active">check</md-icon>

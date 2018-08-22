@@ -38,7 +38,7 @@ export default{
   props: {
     title: {
       type: String,
-      default: 'Conquis Events'
+      default: 'Eventos AMCH'
     },
     backgroundImage: {
       type: String,

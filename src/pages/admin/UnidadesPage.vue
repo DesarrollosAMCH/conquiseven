@@ -37,7 +37,7 @@ export default {
     }
   },
   mounted () {
-    db.collection('unidades').where('club', '==', this.club).onSnapshot(snapshot => {
+    db.collection('units').where('club', '==', this.club).onSnapshot(snapshot => {
       this.units = []
 
       this.club.get().then(value => {

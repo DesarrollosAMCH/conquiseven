@@ -9,7 +9,7 @@
                     </md-card-header>
                     <md-card-content>
                         <div class="md-layout">
-                            <div class="md-layout-item md-small-size-100 md-size-50">
+                            <div class="md-layout-item md-small-size-100 md-size-100">
                                 <evaluaciones-table v-bind:evaluations="evaluations"></evaluaciones-table>
                             </div>
                         </div>
@@ -55,8 +55,8 @@ export default {
         this.evaluations.push({
           id: snapItem.id,
           unit: item.unit,
-          teamork: item.team_work,
-          timing: item.timings,
+          tea_mork: item.team_work,
+          timings: item.timings,
           excellence: item.excellence,
           presentation: item.presentation
         })
