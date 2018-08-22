@@ -14,7 +14,7 @@
           <md-icon v-else>close</md-icon>
         </md-table-cell>
         <md-table-cell md-label="Acciones" >
-          <a v-for="action in item.actions" v-bind:key='action.name' v-bind:href="'eventos/' + action.url" :title="'Mirar '+item.name">
+          <a v-for="action in item.actions" v-bind:key='action.name' @click="redirect('/eventos/'+action.url)" :title="'Mirar '+item.name">
             <md-icon>remove_red_eye</md-icon>
           </a>
         </md-table-cell>

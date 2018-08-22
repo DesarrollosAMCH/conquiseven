@@ -15,7 +15,7 @@ export default {
       }
     },
     redirect: function (url) {
-      console.log(url)
+      this.$router.push({path: url})
     }
   }
 }
