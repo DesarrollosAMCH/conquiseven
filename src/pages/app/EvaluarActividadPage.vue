@@ -36,7 +36,7 @@
                             <div class="md-layout-item md-size-100">
                                 <md-field>
                                     <label>Código</label>
-                                    <md-input @keyup="search" v-model="code"></md-input>
+                                    <md-input @change="search" v-model="code"></md-input>
                                 </md-field>
                             </div>
 
@@ -169,6 +169,13 @@ export default {
       }
     }
   },
+  watch : {
+    code: function (newVal) {
+      if (newVal.length == 4){
+        this.search()
+      }
+    }
+  },
   methods: {
     // can delete
     onClubChange (clubId) {
@@ -190,6 +197,7 @@ export default {
       })
     },
     search (event) {
+      console.log('hola mundo')
       if (this.code.length === 4) {
         db.collection('units').where('code', '==', this.code).onSnapshot(snapshot => {
           this.clubes = []
