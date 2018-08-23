@@ -33,14 +33,14 @@
                                 </md-field>
                             </div>
                             -->
-                            <div class="md-layout-item md-size-100 md-xsmall-size-80">
+                            <div class="md-layout-item md-size-100 md-xsmall-size-50">
                                 <md-field>
                                     <label>Código</label>
                                     <md-input @change="search" v-model="code"></md-input>
                                 </md-field>
                             </div>
 
-                            <div class="md-layout-item md-size-20">
+                            <div class="md-layout-item md-size-10">
                                 <md-button class="md-raised md-success hidden-lg-only" @click="search" :disabled="code.length != 4">Guardar</md-button>
                             </div>
 
