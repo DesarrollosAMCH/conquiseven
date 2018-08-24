@@ -8,7 +8,7 @@
       "sizes": "48x48"
     }
   ],
-  "start_url": "/dist/index.html",
+  "start_url": "/eventos",
   "display": "standalone",
   "background_color": "#fff",
   "theme_color": "",
