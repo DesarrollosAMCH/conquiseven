@@ -6,6 +6,7 @@ var urlsToCache = [
   'app.js',
   '/img/background.053100b1.jpg',
   '/img/logo-conquistadores.9223f1b5.jpg',
+  '/img/logo_convencion.074390ed.png',
   'http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic',
   'https://use.fontawesome.com/releases/v5.0.8/css/all.css',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
