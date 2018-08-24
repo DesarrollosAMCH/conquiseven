@@ -56,6 +56,20 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
   }
 })
 
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function () {
+        console.log("ServiceWorker registered")
+      })
+      .catch(function (error) {
+        console.log("ServiceWorker failed!", error)
+      })
+  })
+}else{
+  console.log("nada de nada")
+}
+
 /* eslint-disable no-new */
 var vm = new Vue({
   el: '#app',
