@@ -14,6 +14,16 @@ var urlsToCache = [
   'https://fonts.googleapis.com/icon?family=Material+Icons',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
   'https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2'
+  
+  
+  // PROD
+  'https://amch.conquistadores.club/clubes',
+  'https://amch.conquistadores.club/eventos',
+  'https://amch.conquistadores.club/evaluar',
+  'https://amch.conquistadores.club/app.js',
+  'https://amch.conquistadores.club/img/background.053100b1.jpg',
+  'https://amch.conquistadores.club/img/logo-conquistadores.9223f1b5.jpg',
+  'https://amch.conquistadores.club/img/logo_convencion.074390ed.png',
 ]
 
 self.addEventListener('install', function (event) {
