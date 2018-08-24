@@ -32,7 +32,7 @@ export default {
   },
   mounted () {
     this.loading = true
-    // this.cacheAllData()
+    this.cacheAllData()
     this.getClubs()
   },
   methods: {
@@ -56,13 +56,10 @@ export default {
                 }
               ]
             })
-            if (this.clubes.length === snapshot.docs.length) {
-              this.cacheAllData()
-            }
           })
         })
       } else {
-        this.clubes = localStorage.getItem()
+        this.clubes = localStorage.getItem('clubs')
       }
     }
   }
