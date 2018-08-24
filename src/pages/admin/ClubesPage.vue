@@ -57,9 +57,13 @@ export default {
               ]
             })
           })
+          console.log('clubes firebase')
+          console.log(this.clubes)
         })
       } else {
-        this.clubes = localStorage.getItem('clubs')
+        this.clubes = JSON.parse(localStorage.getItem('clubs'))
+        console.log('clubes cache')
+        console.log(this.clubes)
       }
     }
   }
