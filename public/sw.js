@@ -7,6 +7,7 @@ var urlsToCache = [
   '/img/background.053100b1.jpg',
   '/img/logo-conquistadores.9223f1b5.jpg',
   '/img/logo_convencion.074390ed.png',
+  
   'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic',
   'https://use.fontawesome.com/releases/v5.0.8/css/all.css',
   'https://use.fontawesome.com/releases/v5.0.8/webfonts/fa-solid-900.woff2',
@@ -21,6 +22,8 @@ var urlsToCache = [
   'https://amch.conquistadores.club/eventos',
   'https://amch.conquistadores.club/evaluar',
   'https://amch.conquistadores.club/app.js',
+  'https://amch.conquistadores.club/css/app.3b930dfa.css',
+  'https://amch.conquistadores.club/css/chunk-vendors.697b2907.css',
   'https://amch.conquistadores.club/img/background.053100b1.jpg',
   'https://amch.conquistadores.club/img/logo-conquistadores.9223f1b5.jpg',
   'https://amch.conquistadores.club/img/logo_convencion.074390ed.png',
