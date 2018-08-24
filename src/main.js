@@ -56,18 +56,18 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
   }
 })
 
-if('serviceWorker' in navigator){
+if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register('/sw.js')
       .then(function () {
-        console.log("ServiceWorker registered")
+        console.log('ServiceWorker registered')
       })
       .catch(function (error) {
-        console.log("ServiceWorker failed!", error)
+        console.log('ServiceWorker failed!', error)
       })
   })
-}else{
-  console.log("nada de nada")
+} else {
+  console.log('nada de nada')
 }
 
 /* eslint-disable no-new */

@@ -171,11 +171,9 @@ export default {
           }
         })
       }
-    }
-  },
-  watch : {
+    },
     code: function (newVal) {
-      if (newVal.length == 4){
+      if (newVal.length === 4) {
         this.search()
       }
     }

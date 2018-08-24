@@ -18,12 +18,12 @@
 
 <script>
 import ClubesTable from '@/components/Tables/ClubesTable'
+import CacheMixin from '@/mixins/cacheMixin'
 import {db} from '@/main'
 
 export default {
-  components: {
-    ClubesTable
-  },
+  components: {ClubesTable},
+  mixins: [CacheMixin],
   name: '',
   data () {
     return {
@@ -32,26 +32,39 @@ export default {
   },
   mounted () {
     this.loading = true
-    db.collection('clubs').orderBy('zone').onSnapshot(snapshot => {
-      this.clubes = []
-      snapshot.forEach(snapItem => {
-        const item = snapItem.data()
+    // this.cacheAllData()
+    this.getClubs()
+  },
+  methods: {
+    getClubs: function () {
+      if (navigator.onLine) {
+        db.collection('clubs').orderBy('zone').onSnapshot(snapshot => {
+          this.clubes = []
+          snapshot.forEach(snapItem => {
+            const item = snapItem.data()
 
-        this.clubes.push({
-          name: item.name,
-          units_count: item.units_count,
-          zone: item.zone,
-          active: item.active,
-          actions: [
-            {
-              url: snapItem.id,
-              title: 'Mirar Club',
-              icon: 'remove_red_eye'
+            this.clubes.push({
+              name: item.name,
+              units_count: item.units_count,
+              zone: item.zone,
+              active: item.active,
+              actions: [
+                {
+                  url: snapItem.id,
+                  title: 'Mirar Club',
+                  icon: 'remove_red_eye'
+                }
+              ]
+            })
+            if (this.clubes.length === snapshot.docs.length) {
+              this.cacheAllData()
             }
-          ]
+          })
         })
-      })
-    })
+      } else {
+        this.clubes = localStorage.getItem()
+      }
+    }
   }
 }
 </script>
