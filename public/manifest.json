@@ -11,6 +11,6 @@
   "start_url": "/eventos",
   "display": "standalone",
   "background_color": "#fff",
-  "theme_color": "",
+  "theme_color": "#43a047",
   "description": ""
 }
