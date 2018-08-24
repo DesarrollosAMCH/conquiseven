@@ -1,6 +1,8 @@
 var CACHE_NAME = 'my-site-cache-v1'
 var urlsToCache = [
   '/clubes',
+  '/eventos',
+  '/evaluar',
   'app.js',
   '/img/background.053100b1.jpg',
   '/img/logo-conquistadores.9223f1b5.jpg',
