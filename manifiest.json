@@ -1,0 +1,16 @@
+{
+  "name": "ConquisEven",
+  "short_name": "Conquis7s",
+  "icons": [
+    {
+      "src": "/src/assets/img/logo_convencion.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    }
+  ],
+  "start_url": "",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "",
+  "description": ""
+}
