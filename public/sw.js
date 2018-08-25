@@ -1,3 +1,4 @@
+const OFFLINE_URL = '/evaluar-offline';
 var CACHE_NAME = 'my-site-cache-v1'
 var urlsToCache = [
   '/clubes',
@@ -18,7 +19,6 @@ var urlsToCache = [
   'https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
   
   // PROD
-  
   'https://amch.conquistadores.club/clubes',
   'https://amch.conquistadores.club/eventos',
   'https://amch.conquistadores.club/evaluar',
@@ -29,7 +29,6 @@ var urlsToCache = [
   'https://amch.conquistadores.club/img/background.053100b1.jpg',
   'https://amch.conquistadores.club/img/logo-conquistadores.9223f1b5.jpg',
   'https://amch.conquistadores.club/img/logo_convencion.074390ed.png',
-  
 ]
 
 self.addEventListener('install', function (event) {
@@ -43,6 +42,8 @@ self.addEventListener('install', function (event) {
   )
 })
 
+
+/*
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
@@ -54,4 +55,42 @@ self.addEventListener('fetch', function(event) {
         return fetch(event.request);
       })
   );
+});
+*/
+
+self.addEventListener('fetch', (event) => {
+  const requestURL = new URL(event.request.url);
+  
+  if (requestURL.origin === location.origin) {
+    // Load static assets from cache if network is down
+    if (/\.(css|js|woff|woff2|ttf|eot|svg)$/.test(requestURL.pathname)) {
+      event.respondWith(
+        caches.open(CACHE_NAME).then(cache =>
+          caches.match(event.request).then((result) => {
+            if (navigator.onLine === false) {
+              // We are offline so return the cached version immediately, null or not.
+              return result;
+            }
+            // We are online so let's run the request to make sure our content
+            // is up-to-date.
+            return fetch(event.request).then((response) => {
+              // Save the result to cache for later use.
+              cache.put(event.request, response.clone());
+              return response;
+            });
+          }),
+        ),
+      );
+      return;
+    }
+  }
+  
+  if (event.request.mode === 'navigate' && navigator.onLine === false) {
+    // Uh-oh, we navigated to a page while offline. Let's show our default page.
+    event.respondWith(caches.match(OFFLINE_URL));
+    return;
+  }
+  
+  // Passthrough for everything else
+  event.respondWith(fetch(event.request));
 });
