@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/clubes',
+    redirect: '/evaluar-offline',
     children: [
       {
         path: 'dashboard',

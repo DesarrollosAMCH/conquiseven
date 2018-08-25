@@ -13,9 +13,13 @@ export default new Vuex.Store({
       type: 'success',
       show: false,
       message: ''
-    }
+    },
+    activity: null
   },
   mutations: {
+    setActivity: (state, newVal) => {
+      state.activity = newVal
+    },
     setLoaded: (state, loaded) => {
       state.loaded = loaded
     },

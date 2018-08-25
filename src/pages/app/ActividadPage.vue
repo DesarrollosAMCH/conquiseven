@@ -4,8 +4,8 @@
             <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
                 <md-card>
                     <md-card-header data-background-color="green">
-                        <h4 class="title">Actividad: {{ activity.name }}</h4>
-                        <p class="category">{{ activity.description }}.</p>
+                        <h4 class="title">Evaluaciones de: {{ actividad.name }}</h4>
+                        <p class="category">{{ actividad.description }}.</p>
                     </md-card-header>
                     <md-card-content>
                         <div class="md-layout">
@@ -37,33 +37,40 @@ export default {
   data () {
     return {
       showSnackbar: false,
-      actividad: db.collection('activities').doc(this.$route.params.activity),
-      evaluations: [],
-      activity: {
-        name: '',
-        description: ''
-      }
+      actividad: this.getActividad(),
+      evaluations: []
     }
   },
   mounted () {
+    this.actividad = this.getActividad()
     this.loading = true
+    let actividad = db.collection('activities').doc(this.actividad.id)
 
-    db.collection('evaluations').where('activity', '==', this.actividad).onSnapshot(snapshot => {
+    db.collection('evaluations').where('activity', '==', actividad).onSnapshot(snapshot => {
       this.evaluations = []
       snapshot.forEach(snapItem => {
         const item = snapItem.data()
         this.evaluations.push({
           id: snapItem.id,
           unit: item.unit,
-          teamork: item.team_work,
-          timing: item.timings,
+          team_work: item.team_work,
+          timings: item.timings,
           excellence: item.excellence,
           presentation: item.presentation
         })
       })
     })
   },
-  methods: {}
+  methods: {
+    getActividad () {
+      let exists = localStorage.getItem('defaultActivity')
+      if (exists) {
+        return JSON.parse(exists)
+      } else {
+        return null
+      }
+    }
+  }
 }
 </script>
 

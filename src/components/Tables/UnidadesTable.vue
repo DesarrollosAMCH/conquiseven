@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="units.length">
 
     <loader v-if="loading" />
 

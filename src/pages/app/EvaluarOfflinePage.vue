@@ -148,7 +148,7 @@ export default {
       showSnackbar: false,
       showSnackbarError: false,
       activityCode: '',
-      actividad: null,
+      actividad: this.$store.state.activity,
       unidad: null,
       unidades: [],
       unitCode: '',
@@ -168,7 +168,19 @@ export default {
       this.activityCode = newVal.toUpperCase()
     }
   },
+  mounted () {
+    this.$store.commit('setActivity', this.getActividad())
+    this.actividad = this.$store.state.activity
+  },
   methods: {
+    getActividad () {
+      let exists = localStorage.getItem('defaultActivity')
+      if (exists) {
+        return JSON.parse(exists)
+      } else {
+        return null
+      }
+    },
     search () {
       /*
       let activities = JSON.parse(localStorage.getItem('activities'))
@@ -186,13 +198,16 @@ export default {
         snapshot.forEach(snapItem => {
           const item = snapItem.data()
           this.unidades = []
-          this.actividad = {
+          let actividad = {
             id: snapItem.id,
             name: item.name,
             description: item.description,
             time: item.time
           }
           this.unidades.push(this.unidad)
+          this.$store.commit('setActivity', actividad)
+          this.actividad = this.$store.state.actiity
+          localStorage.setItem('defaultActivity', JSON.stringify(actividad))
         })
       })
     },
@@ -232,7 +247,7 @@ export default {
       db.collection('evaluations').doc().set(this.evaluation)
       // this.showSnackbar = true
       this.successfull()
-      setTimeout(() => this.reset(), 1000)
+      this.reset()
       setTimeout(() => this.$router.push({path: '/actividad/' + this.actividad.id}), 2000)
     },
     saveOffline () {

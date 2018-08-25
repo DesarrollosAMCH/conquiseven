@@ -30,11 +30,11 @@
         <md-icon>assignment</md-icon>
         <p>Evaluar</p>
       </sidebar-link>
-      <sidebar-link to="/actividad/TU6WCJnqM0lMvZ5EMIyL">
+      -->
+      <sidebar-link :to="'/actividad/' + actividad.id" v-if="actividad !== null">
         <md-icon>library_books</md-icon>
         <p>Evaluaciones</p>
       </sidebar-link>
-      -->
       <sidebar-link to="/evaluar-offline/">
         <md-icon>library_books</md-icon>
         <p>Evaluar Offline</p>
@@ -44,11 +44,10 @@
         <md-icon>notifications</md-icon>
         <p>Notifications</p>
       </sidebar-link>
-      <sidebar-link to="/upgrade" class="active-pro">
-        <md-icon>unarchive</md-icon>
-        <p>Upgrade to PRO</p>
-      </sidebar-link>
       -->
+      <sidebar-link class="active-pro" v-if="actividad !== null">
+        <a @click="removeDefaultActivity">Cambiar de Actividad</a>
+      </sidebar-link>
     </side-bar>
 
     <div class="main-panel">
@@ -74,7 +73,26 @@ import MobileMenu from '@/pages/Layout/MobileMenu.vue'
 export default {
   data () {
     return {
-      offline: !navigator.onLine
+      offline: !navigator.onLine,
+      actividad: this.$store.state.activity
+    }
+  },
+  mounted () {
+    this.$store.commit('setActivity', this.getActividad())
+    this.actividad = this.$store.state.activity
+  },
+  methods: {
+    getActividad () {
+      let exists = localStorage.getItem('defaultActivity')
+      if (exists) {
+        return JSON.parse(exists)
+      } else {
+        return null
+      }
+    },
+    removeDefaultActivity () {
+      localStorage.removeItem('defaultActivity')
+      this.$store.commit('setActivity', null)
     }
   },
   components: {
@@ -85,3 +103,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  li.active-pro>button>div>a{
+    margin: 0 auto !important;
+    color: red !important;
+  }
+</style>
