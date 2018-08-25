@@ -7,21 +7,25 @@ export default {
       cachedUnits: [],
       cachedClubs: [],
       cachedEvents: [],
-      cachedActivities: []
+      cachedActivities: [],
+      cachedEvaluations: []
     }
   },
   watch: {
     cachedUnits: function (newVal) {
-      localStorage.setItem('units', JSON.stringify(newVal))
+      // localStorage.setItem('units', JSON.stringify(newVal))
     },
     cachedClubs: function (newVal) {
-      localStorage.setItem('clubs', JSON.stringify(newVal))
+      // localStorage.setItem('clubs', JSON.stringify(newVal))
     },
     cachedEvents: function (newVal) {
-      localStorage.setItem('events', JSON.stringify(newVal))
+      // localStorage.setItem('events', JSON.stringify(newVal))
     },
     cachedActivities: function (newVal) {
-      localStorage.setItem('activities', JSON.stringify(newVal))
+      // localStorage.setItem('activities', JSON.stringify(newVal))
+    },
+    cachedEvaluations: function (newVal) {
+      // localStorage.setItem('evaluations', JSON.stringify(newVal))
     }
   },
   methods: {
@@ -96,6 +100,7 @@ export default {
         console.log(snapshot)
         snapshot.forEach(snapItem => {
           var item = snapItem.data()
+          let activity = db.collection('activities').doc(snapItem.id)
           this.cachedActivities.push({
             id: snapItem.id,
             name: item.name,
@@ -104,10 +109,25 @@ export default {
             eventId: xevent.id,
             eventName: eventName
           })
+          this.cacheEvluations(activity, item.name)
         })
       })
     },
-    cachedEvluations: function () {
+    cacheEvluations: function (activity, activityName) {
+      db.collection('evaluations').where('activity', '==', activity).onSnapshot(snapshot => {
+        console.log(snapshot)
+        snapshot.forEach(snapItem => {
+          var item = snapItem.data()
+          this.cachedEvaluations.push({
+            id: snapItem.id,
+            name: item.name,
+            code: item.code,
+            time: item.time,
+            eventId: activity.id,
+            eventName: activityName
+          })
+        })
+      })
     }
   }
 }

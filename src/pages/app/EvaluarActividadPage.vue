@@ -224,7 +224,7 @@ export default {
 
       db.collection('evaluations').doc().set(this.evaluation)
       this.showSnackbar = true
-      setTimeout(() => this.$router.push({path: '/actividad/TU6WCJnqM0lMvZ5EMIyL'}), 2000)
+      setTimeout(() => this.$router.push({path: '/actividad/' + this.actividad.id}), 2000)
     }
   }
 }

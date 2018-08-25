@@ -21,7 +21,7 @@
                             </div>
 
                               <div class="md-layout-item md-size-100 md-xsmall-size-50 text-right">
-                                <md-button class="md-raised md-success" @click="search" :disabled="activityCode.length != 5">Buscar</md-button>
+                                <md-button class="md-raised md-success" @click="search">Buscar</md-button>
                             </div>
                           </div>
                         </form>
@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="md-layout-item md-size-100 md-xsmall-size-50 text-right">
-                                    <md-button class="md-raised md-success" @click="searchByUnitCode" :disabled="unitCode.length != 4">Buscar</md-button>
+                                    <md-button class="md-raised md-success" @click="searchByUnitCode">Buscar</md-button>
                                 </div>
 
                                 <div class="md-layout-item md-size-100">
@@ -134,7 +134,7 @@
 </template>
 
 <script>
-// import {db} from '@/main'
+import {db} from '@/main'
 import Loader from '@/components/Utils/Loader'
 import UnidadesTable from '@/components/Tables/UnidadesTable'
 
@@ -170,51 +170,72 @@ export default {
   },
   methods: {
     search () {
-      if (this.activityCode.length === 5) {
-        let activities = JSON.parse(localStorage.getItem('activities'))
-        let result = this.lodash.find(activities, ['code', this.activityCode.toLowerCase()])
-        if (typeof result !== 'undefined') {
-          this.actividad = result
-          this.showSnackbarError = false
-          // localStorage.setItem('mainActivity', this.actividad)
-        } else {
-          this.error()
-        }
+      /*
+      let activities = JSON.parse(localStorage.getItem('activities'))
+      let result = this.lodash.find(activities, ['code', this.activityCode.toLowerCase()])
+      if (typeof result !== 'undefined') {
+        this.actividad = result
+        this.showSnackbarError = false
+        // localStorage.setItem('mainActivity', this.actividad)
+      } else {
+        this.error()
       }
+      */
+      db.collection('activities').where('code', '==', this.activityCode.toLowerCase()).onSnapshot(snapshot => {
+        if (snapshot.empty) { this.error() }
+        snapshot.forEach(snapItem => {
+          const item = snapItem.data()
+          this.unidades = []
+          this.actividad = {
+            id: snapItem.id,
+            name: item.name,
+            description: item.description,
+            time: item.time
+          }
+          this.unidades.push(this.unidad)
+        })
+      })
     },
     searchByUnitCode () {
-      console.log('hola mundo')
-      if (this.unitCode.length === 4) {
-        let units = JSON.parse(localStorage.getItem('units'))
-        let result = this.lodash.find(units, ['code', this.unitCode.toLowerCase()])
-        if (typeof result !== 'undefined') {
-          this.unidad = result
-          this.unidades = []
-          this.unidades.push(this.unidad)
-          this.showSnackbarError = false
-        } else {
-          this.error()
-        }
-        /*
-        db.collection('units').where('code', '==', this.code).onSnapshot(snapshot => {
-          this.clubes = []
-          snapshot.forEach(snapItem => {
-            const item = snapItem.data()
-            this.unidades = []
-            this.unidad = {
-              id: snapItem.id,
-              name: item.name,
-              clubName: item.clubName,
-              zoneName: item.zoneName,
-              active: true
-            }
-            this.unidades.push(this.unidad)
-          })
-        })
-        */
+      /*
+      let units = JSON.parse(localStorage.getItem('units'))
+      let result = this.lodash.find(units, ['code', this.unitCode.toLowerCase()])
+      if (typeof result !== 'undefined') {
+        this.unidad = result
+        this.unidades = []
+        this.unidades.push(this.unidad)
+        this.showSnackbarError = false
+      } else {
+        this.error()
       }
+      */
+      db.collection('units').where('code', '==', this.unitCode.toLowerCase()).onSnapshot(snapshot => {
+        this.clubes = []
+        snapshot.forEach(snapItem => {
+          const item = snapItem.data()
+          this.unidades = []
+          this.unidad = {
+            id: snapItem.id,
+            name: item.name,
+            clubName: item.clubName,
+            zoneName: item.zoneName,
+            active: true
+          }
+          this.unidades.push(this.unidad)
+        })
+      })
     },
     save () {
+      this.evaluation.unit = db.collection('units').doc(this.unidad.id)
+      this.evaluation.activity = db.collection('activities').doc(this.actividad.id)
+
+      db.collection('evaluations').doc().set(this.evaluation)
+      // this.showSnackbar = true
+      this.successfull()
+      setTimeout(() => this.reset(), 1000)
+      setTimeout(() => this.$router.push({path: '/actividad/' + this.actividad.id}), 2000)
+    },
+    saveOffline () {
       this.evaluation.unit = this.unidad.id
       this.evaluation.activity = this.actividad.id
       let cachedEvaluations = localStorage.getItem('evaluations')

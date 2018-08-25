@@ -33,6 +33,17 @@ import awesomeConfig from '@/config/fontawesome'
 awesomeConfig.setup()
 
 firebase.initializeApp(firebaseConfig)
+firebase.firestore().enablePersistence()
+  .then(function () {
+    console.log('persistence enabled')
+  })
+  .catch(function (err) {
+    if (err.code === 'failed-precondition') {
+      console.error('Multiple tabs open, persistence can only be enabled in one tab at a a time.')
+    } else if (err.code === 'unimplemented') {
+      console.error('The current browser does not support all of the features required to enable persistence.')
+    }
+  })
 
 export const db = firebase.firestore()
 
