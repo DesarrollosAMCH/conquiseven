@@ -18,14 +18,14 @@
 
 <script>
 import moment from 'moment'
+import CacheMixin from '@/mixins/cacheMixin'
 import EventosTable from '@/components/Tables/EventosTable'
 import {db} from '@/main'
 
 export default {
   name: '',
-  components: {
-    EventosTable
-  },
+  components: {EventosTable},
+  mixins: [CacheMixin],
   data () {
     return {
       events: []
@@ -33,27 +33,37 @@ export default {
   },
   mounted () {
     this.loading = true
-    db.collection('events').orderBy('name').onSnapshot(snapshot => {
-      this.events = []
-      snapshot.forEach(snapItem => {
-        const item = snapItem.data()
-        moment.locale('es')
-        this.events.push({
-          name: item.name,
-          startDate: moment(String(item.startDate)).format('llll'),
-          endDate: moment(String(item.endDate)).format('llll'),
-          address: item.address,
-          active: item.active,
-          actions: [
-            {
-              url: snapItem.id,
-              title: 'Mirar Evento',
-              icon: 'remove_red_eye'
-            }
-          ]
+    this.cacheAllData()
+    this.getEvents()
+  },
+  methods: {
+    getEvents: function () {
+      if (navigator.onLine) {
+        db.collection('events').orderBy('name').onSnapshot(snapshot => {
+          this.events = []
+          snapshot.forEach(snapItem => {
+            const item = snapItem.data()
+            moment.locale('es')
+            this.events.push({
+              name: item.name,
+              startDate: moment(String(item.startDate)).format('llll'),
+              endDate: moment(String(item.endDate)).format('llll'),
+              address: item.address,
+              active: item.active,
+              actions: [
+                {
+                  url: snapItem.id,
+                  title: 'Mirar Evento',
+                  icon: 'remove_red_eye'
+                }
+              ]
+            })
+          })
         })
-      })
-    })
+      } else {
+        this.events = JSON.parse(localStorage.getItem('events'))
+      }
+    }
   }
 }
 </script>

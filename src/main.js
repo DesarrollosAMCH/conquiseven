@@ -4,6 +4,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
 import Vuetify from 'vuetify'
+import VueLodash from 'vue-lodash'
 
 import 'vuetify/es5/util/colors'
 import 'vuetify/dist/vuetify.min.css'
@@ -41,6 +42,9 @@ const router = new VueRouter({
   linkExactActiveClass: 'nav-item active',
   mode: 'history'
 })
+
+const options = { name: 'lodash' }
+Vue.use(VueLodash, options)
 
 Vue.use(VueRouter)
 Vue.use(MaterialDashboard)
