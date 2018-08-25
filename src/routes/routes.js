@@ -15,6 +15,7 @@ import EventosPage from '@/pages/admin/EventosPage'
 import EventosDetallePage from '@/pages/admin/EventosDetallePage'
 
 import EvaluarPage from '@/pages/app/EvaluarPage'
+import EvaluarOfflinePage from '@/pages/app/EvaluarOfflinePage'
 import EvaluarActividadPage from '@/pages/app/EvaluarActividadPage'
 import ActividadPage from '@/pages/app/ActividadPage'
 
@@ -108,6 +109,11 @@ const routes = [
         path: 'actividad/:activity',
         name: 'Ver Actividad',
         component: ActividadPage
+      },
+      {
+        path: 'evaluar-offline',
+        name: 'Evaluar sin Conexión',
+        component: EvaluarOfflinePage
       }
     ]
   }

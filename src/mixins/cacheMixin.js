@@ -35,6 +35,7 @@ export default {
           const item = snapItem.data()
           let club = db.collection('clubs').doc(snapItem.id)
           this.cachedClubs.push({
+            id: snapItem.id,
             name: item.name,
             units_count: item.units_count,
             zone: item.zoneName,
@@ -91,11 +92,11 @@ export default {
       })
     },
     cacheActivities: function (xevent, eventName) {
-      var self = this
       db.collection('activities').where('event', '==', xevent).onSnapshot(snapshot => {
+        console.log(snapshot)
         snapshot.forEach(snapItem => {
           var item = snapItem.data()
-          self.cachedActivities.push({
+          this.cachedActivities.push({
             id: snapItem.id,
             name: item.name,
             code: item.code,

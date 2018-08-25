@@ -25,13 +25,14 @@
 <script>
 import UnidadesTable from '@/components/Tables/UnidadesTable'
 import {db} from '@/main'
+import _ from 'vue-lodash'
 
 export default {
   components: {UnidadesTable},
   name: 'unidades-page',
   data () {
     return {
-      club: db.collection('clubs').doc(this.$route.params.id),
+      club: this.getClub(),
       clubName: '',
       units: []
     }
@@ -48,6 +49,18 @@ export default {
         this.units.push(snapItem.data())
       })
     })
+  },
+  methods: {
+    getClub: function () {
+      if (navigator.onLine) {
+        return db.collection('clubs').doc(this.$route.params.id)
+      } else {
+        let club = _.find(localStorage.getItem('clubs'), ['id', this.$route.params.id])
+        return JSON.parse(club)
+      }
+    },
+    getUnits: function (club) {
+    }
   }
 }
 </script>

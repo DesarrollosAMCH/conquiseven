@@ -17,6 +17,7 @@
         <p>Usuarios</p>
       </sidebar-link>
       -->
+      <!--
       <sidebar-link to="/clubes">
         <md-icon>content_paste</md-icon>
         <p>Clubes</p>
@@ -32,6 +33,11 @@
       <sidebar-link to="/actividad/TU6WCJnqM0lMvZ5EMIyL">
         <md-icon>library_books</md-icon>
         <p>Evaluaciones</p>
+      </sidebar-link>
+      -->
+      <sidebar-link to="/evaluar-offline/">
+        <md-icon>library_books</md-icon>
+        <p>Evaluar Offline</p>
       </sidebar-link>
       <!--
       <sidebar-link to="/notifications">
@@ -66,6 +72,11 @@ import DashboardContent from './Content.vue'
 import MobileMenu from '@/pages/Layout/MobileMenu.vue'
 
 export default {
+  data () {
+    return {
+      offline: !navigator.onLine
+    }
+  },
   components: {
     TopNavbar,
     DashboardContent,
