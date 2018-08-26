@@ -221,7 +221,7 @@ export default {
       }
       */
       db.collection('activities').where('code', '==', this.activityCode.toLowerCase()).onSnapshot(snapshot => {
-        if (snapshot.empty) { this.error() }
+        if (snapshot.docs.length === 0) { this.error() }
         snapshot.forEach(snapItem => {
           const item = snapItem.data()
           let actividad = {
@@ -253,12 +253,12 @@ export default {
       db.collection('units').where('code', '==', this.unitCode.toLowerCase()).onSnapshot(snapshot => {
         this.clubes = []
         snapshot.forEach(snapItem => {
-
+          this.snackbarReset()
           let frUnidad = db.collection('units').doc(snapItem.id)
           let frActividad = db.collection('activities').doc(this.actividad.id)
           db.collection('evaluations').where('unit', '==', frUnidad).where('activity', '==', frActividad).onSnapshot(snapshot => {
             console.log(snapshot)
-            if(snapshot.docs.length){
+            if (snapshot.docs.length) {
               this.showSnackbarWarning = true
             }
           })
@@ -282,7 +282,7 @@ export default {
       moment.locale('es')
       this.evaluation.date = moment().format('YYYY-MM-DD HH:mm')
 
-        db.collection('evaluations').doc().set(this.evaluation)
+      db.collection('evaluations').doc().set(this.evaluation)
       // this.showSnackbar = true
       this.successfull()
       this.reset()
@@ -302,11 +302,20 @@ export default {
       // setTimeout(() => this.$router.push({path: '/actividad/TU6WCJnqM0lMvZ5EMIyL'}), 2000)
     },
     successfull () {
-      this.showSnackbarError = false
+      this.snackbarReset()
       this.showSnackbar = true
     },
+    warning () {
+      this.snackbarReset()
+      this.showSnackbarWarning = true
+    },
     error () {
+      this.snackbarReset()
       this.showSnackbarError = true
+    },
+    snackbarReset () {
+      this.showSnackbarError = false
+      this.showSnackbarWarning = false
       this.showSnackbar = false
     },
     reset () {
