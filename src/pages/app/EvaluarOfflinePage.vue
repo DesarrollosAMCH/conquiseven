@@ -144,13 +144,14 @@
                 Lo sentimos, el código no es válido.
             </span>
         </md-snackbar>
-
+        <!--
         <md-snackbar :md-duration="10000" :md-active.sync="showSnackbarWarning" md-persistent>
             <span>
                 <md-icon class="md-size-2x" style="color: orange">warning</md-icon>
                 Unidad ya evaluada en el evento.
             </span>
         </md-snackbar>
+        -->
     </div>
 </template>
 
@@ -221,7 +222,7 @@ export default {
       }
       */
       db.collection('activities').where('code', '==', this.activityCode.toLowerCase()).onSnapshot(snapshot => {
-        if (snapshot.docs.length === 0) { this.error() }
+        if (snapshot.empty) { this.error() }
         snapshot.forEach(snapItem => {
           const item = snapItem.data()
           let actividad = {
@@ -251,6 +252,7 @@ export default {
       */
 
       db.collection('units').where('code', '==', this.unitCode.toLowerCase()).onSnapshot(snapshot => {
+        if (snapshot.empty) { this.error() }
         this.clubes = []
         snapshot.forEach(snapItem => {
           this.snackbarReset()
@@ -259,7 +261,7 @@ export default {
           db.collection('evaluations').where('unit', '==', frUnidad).where('activity', '==', frActividad).onSnapshot(snapshot => {
             console.log(snapshot)
             if (snapshot.docs.length) {
-              this.showSnackbarWarning = true
+              this.warning()
             }
           })
 
