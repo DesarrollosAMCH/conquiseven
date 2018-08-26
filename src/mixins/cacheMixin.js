@@ -32,6 +32,7 @@ export default {
     cacheAllData: function () {
       this.cacheClubs()
       this.cacheEvents()
+      this.cacheEvaluations()
     },
     cacheClubs: function () {
       db.collection('clubs').orderBy('zone').onSnapshot(snapshot => {
@@ -53,6 +54,9 @@ export default {
             ]
           })
           this.cacheUnits(club, item.name)
+          if (snapshot.docs.length === this.cachedClubs.length) {
+            console.log("Clubes cargados")
+          }
         })
       })
     },
@@ -68,6 +72,9 @@ export default {
             clubName: clubName,
             clubId: club.id
           })
+          if (snapshot.docs.length === this.cachedUnits.length) {
+            console.log("Unidades cargadas")
+          }
         })
       })
     },
@@ -92,6 +99,9 @@ export default {
             ]
           })
           this.cacheActivities(xevent, item.name)
+          if (snapshot.docs.length === this.cachedEvents.length) {
+            console.log("Eventos cargados")
+          }
         })
       })
     },
@@ -110,6 +120,9 @@ export default {
             eventName: eventName
           })
           this.cacheEvluations(activity, item.name)
+          if (snapshot.docs.length === this.cachedActivities.length) {
+            console.log("Actividades cargadas")
+          }
         })
       })
     },
@@ -126,6 +139,9 @@ export default {
             eventId: activity.id,
             eventName: activityName
           })
+          if (snapshot.docs.length === this.cachedEvaluations.length) {
+            console.log("Evaluaciones cargadas")
+          }
         })
       })
     }

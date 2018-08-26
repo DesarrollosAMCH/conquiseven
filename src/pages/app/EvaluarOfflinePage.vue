@@ -136,10 +136,12 @@
 <script>
 import {db} from '@/main'
 import Loader from '@/components/Utils/Loader'
+import CacheMixin from '@/mixins/cacheMixin'
 import UnidadesTable from '@/components/Tables/UnidadesTable'
 
 export default {
   components: {Loader, UnidadesTable},
+  mixins: [CacheMixin],
   name: 'evaluarOfflne',
   data () {
     return {
@@ -169,6 +171,7 @@ export default {
     }
   },
   mounted () {
+    this.cacheAllData()
     this.$store.commit('setActivity', this.getActividad())
     this.actividad = this.$store.state.activity
   },
