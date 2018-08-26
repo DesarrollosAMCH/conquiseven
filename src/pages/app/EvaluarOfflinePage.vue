@@ -197,16 +197,14 @@ export default {
         if (snapshot.empty) { this.error() }
         snapshot.forEach(snapItem => {
           const item = snapItem.data()
-          this.unidades = []
           let actividad = {
             id: snapItem.id,
             name: item.name,
             description: item.description,
             time: item.time
           }
-          this.unidades.push(this.unidad)
           this.$store.commit('setActivity', actividad)
-          this.actividad = this.$store.state.actiity
+          this.actividad = this.$store.state.activity
           localStorage.setItem('defaultActivity', JSON.stringify(actividad))
         })
       })
