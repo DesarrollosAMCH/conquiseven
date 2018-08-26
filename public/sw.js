@@ -1,6 +1,7 @@
 const OFFLINE_URL = '/evaluar-offline';
 var CACHE_NAME = 'my-site-cache-v1'
 var urlsToCache = [
+  /*
   '/clubes',
   '/eventos',
   '/evaluar',
@@ -9,6 +10,7 @@ var urlsToCache = [
   '/img/background.053100b1.jpg',
   '/img/logo-conquistadores.9223f1b5.jpg',
   '/img/logo_convencion.074390ed.png',
+  */
   
   'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic',
   'https://use.fontawesome.com/releases/v5.0.8/css/all.css',
