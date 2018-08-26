@@ -55,7 +55,7 @@ export default {
           })
           this.cacheUnits(club, item.name)
           if (snapshot.docs.length === this.cachedClubs.length) {
-            console.log("Clubes cargados")
+            console.log('Clubes cargados')
           }
         })
       })
@@ -73,7 +73,7 @@ export default {
             clubId: club.id
           })
           if (snapshot.docs.length === this.cachedUnits.length) {
-            console.log("Unidades cargadas")
+            console.log('Unidades cargadas')
           }
         })
       })
@@ -100,7 +100,7 @@ export default {
           })
           this.cacheActivities(xevent, item.name)
           if (snapshot.docs.length === this.cachedEvents.length) {
-            console.log("Eventos cargados")
+            console.log('Eventos cargados')
           }
         })
       })
@@ -121,12 +121,12 @@ export default {
           })
           this.cacheEvluations(activity, item.name)
           if (snapshot.docs.length === this.cachedActivities.length) {
-            console.log("Actividades cargadas")
+            console.log('Actividades cargadas')
           }
         })
       })
     },
-    cacheEvluations: function (activity, activityName) {
+    cacheEvaluations: function (activity, activityName) {
       db.collection('evaluations').where('activity', '==', activity).onSnapshot(snapshot => {
         console.log(snapshot)
         snapshot.forEach(snapItem => {
@@ -140,7 +140,7 @@ export default {
             eventName: activityName
           })
           if (snapshot.docs.length === this.cachedEvaluations.length) {
-            console.log("Evaluaciones cargadas")
+            console.log('Evaluaciones cargadas')
           }
         })
       })
