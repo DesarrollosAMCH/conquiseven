@@ -7,7 +7,7 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Nombre">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Unidades">{{ item.units_count }}</md-table-cell>
-        <md-table-cell md-label="Zona">{{ item.zoneName }}</md-table-cell>
+        <md-table-cell md-label="Zona">{{ item.zone }}</md-table-cell>
         <md-table-cell md-label="Activo">
           <md-icon v-if="item.active">check</md-icon>
           <md-icon v-else>close</md-icon>
@@ -42,8 +42,7 @@ export default {
   data () {
     return {
     }
-  }
-  /*
+  },
   watch: {
     clubes: function (newval) {
       newval.forEach((club, index, array) => {
@@ -55,6 +54,5 @@ export default {
       })
     }
   }
-  */
 }
 </script>

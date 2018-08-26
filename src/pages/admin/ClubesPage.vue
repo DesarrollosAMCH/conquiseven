@@ -42,11 +42,11 @@ export default {
           this.clubes = []
           snapshot.forEach(snapItem => {
             const item = snapItem.data()
-
-            this.clubes.push({
+            let club = {
+              id: snapItem.id,
               name: item.name,
-              units_count: item.units_count,
-              zone: item.zone,
+              units_count: 0,
+              zone: item.zoneName,
               active: item.active,
               actions: [
                 {
@@ -55,7 +55,13 @@ export default {
                   icon: 'remove_red_eye'
                 }
               ]
+            }
+            let frClub = db.collection('clubs').doc(club.id)
+            db.collection('units').where('club', '==', frClub).onSnapshot(snapshot => {
+              club.units_count = snapshot.docs.length
             })
+
+            this.clubes.push(club)
           })
         })
       } else {

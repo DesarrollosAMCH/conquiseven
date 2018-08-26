@@ -32,7 +32,6 @@ export default {
     cacheAllData: function () {
       this.cacheClubs()
       this.cacheEvents()
-      this.cacheEvaluations()
     },
     cacheClubs: function () {
       db.collection('clubs').orderBy('zone').onSnapshot(snapshot => {
@@ -119,7 +118,7 @@ export default {
             eventId: xevent.id,
             eventName: eventName
           })
-          this.cacheEvluations(activity, item.name)
+          this.cacheEvaluations(activity, item.name)
           if (snapshot.docs.length === this.cachedActivities.length) {
             console.log('Actividades cargadas')
           }
