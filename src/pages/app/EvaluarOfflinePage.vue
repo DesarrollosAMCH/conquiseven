@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div class="md-layout-item md-size-100">
-                                    <unidades-table v-if="unidades.length" v-bind:units="unidades"></unidades-table>
+                                    <unidades-table class="unidades-table" v-if="unidades.length" v-bind:units="unidades"></unidades-table>
                                 </div>
 
                                 <div class="md-layout-item md-size-100">
@@ -96,6 +96,20 @@
 
                                 <div class="md-layout-item md-size-50 md-xsmall-size-100">
                                     <md-checkbox v-model="evaluation.team_work">Trabajo en Equipo</md-checkbox>
+                                </div>
+
+                                <div class="md-layout-item md-size-100">
+                                    <p class="decription">
+                                        <small><b>Nota:</b></small>
+                                        Si lo consideras necesario, puedes agregar un comentario a la evaluación.
+                                    </p>
+                                </div>
+
+                                <div class="md-layout-item md-size-100 md-xsmall-size-50">
+                                    <md-field>
+                                        <label>Comentarios</label>
+                                        <md-textarea v-model="evaluation.comment"></md-textarea>
+                                    </md-field>
                                 </div>
 
                                 <div class="md-layout-item md-size-100 text-right">
@@ -130,6 +144,13 @@
                 Lo sentimos, el código no es válido.
             </span>
         </md-snackbar>
+
+        <md-snackbar :md-duration="10000" :md-active.sync="showSnackbarWarning" md-persistent>
+            <span>
+                <md-icon class="md-size-2x" style="color: orange">warning</md-icon>
+                Unidad ya evaluada en el evento.
+            </span>
+        </md-snackbar>
     </div>
 </template>
 
@@ -138,6 +159,7 @@ import {db} from '@/main'
 import Loader from '@/components/Utils/Loader'
 import CacheMixin from '@/mixins/cacheMixin'
 import UnidadesTable from '@/components/Tables/UnidadesTable'
+import moment from 'moment'
 
 export default {
   components: {Loader, UnidadesTable},
@@ -149,12 +171,14 @@ export default {
       loading: false,
       showSnackbar: false,
       showSnackbarError: false,
+      showSnackbarWarning: false,
       activityCode: '',
       actividad: this.$store.state.activity,
       unidad: null,
       unidades: [],
       unitCode: '',
       evaluation: {
+        comment: '',
         excellence: false,
         team_work: false,
         timings: false,
@@ -225,9 +249,20 @@ export default {
         this.error()
       }
       */
+
       db.collection('units').where('code', '==', this.unitCode.toLowerCase()).onSnapshot(snapshot => {
         this.clubes = []
         snapshot.forEach(snapItem => {
+
+          let frUnidad = db.collection('units').doc(snapItem.id)
+          let frActividad = db.collection('activities').doc(this.actividad.id)
+          db.collection('evaluations').where('unit', '==', frUnidad).where('activity', '==', frActividad).onSnapshot(snapshot => {
+            console.log(snapshot)
+            if(snapshot.docs.length){
+              this.showSnackbarWarning = true
+            }
+          })
+
           const item = snapItem.data()
           this.unidades = []
           this.unidad = {
@@ -244,8 +279,10 @@ export default {
     save () {
       this.evaluation.unit = db.collection('units').doc(this.unidad.id)
       this.evaluation.activity = db.collection('activities').doc(this.actividad.id)
+      moment.locale('es')
+      this.evaluation.date = moment().format('YYYY-MM-DD HH:mm')
 
-      db.collection('evaluations').doc().set(this.evaluation)
+        db.collection('evaluations').doc().set(this.evaluation)
       // this.showSnackbar = true
       this.successfull()
       this.reset()
@@ -290,5 +327,13 @@ export default {
 <style lang="scss" scoped>
     .md-switch {
         display: flex;
+    }
+    .decription{
+        margin-top: 60px;
+        margin-bottom: 10px;
+    }
+    .unidades-table{
+        margin-top: 20px;
+        margin-bottom: 10px;
     }
 </style>

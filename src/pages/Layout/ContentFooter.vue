@@ -4,22 +4,16 @@
         <nav>
             <ul>
               <li>
-                <router-link :to="{path:'/dashboard'}">Home</router-link>
+                <router-link :to="{path:'/clubes'}">Clubes</router-link>
               </li>
                 <li>
-                    <a href="#">
-                        Company
-                    </a>
+                    <router-link :to="{path:'/eventos'}">Eventos</router-link>
                 </li>
                 <li>
-                    <a href="#">
-                        Portfolio
-                    </a>
+                    <router-link :to="{path:'/evaluar'}">Evaluar</router-link>
                 </li>
                 <li>
-                    <a href="#">
-                        Blog
-                    </a>
+                    <router-link :to="{path:'/evaluar-offline'}">Evaluar sin conección</router-link>
                 </li>
             </ul>
         </nav>
