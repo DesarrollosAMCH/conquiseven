@@ -3,7 +3,7 @@
   "short_name": "Conquis7s",
   "icons": [
     {
-      "src": "/src/assets/img/logo_convencion.png",
+      "src": "/img/logo_convencion.png",
       "type": "image/png",
       "sizes": "48x48"
     }
