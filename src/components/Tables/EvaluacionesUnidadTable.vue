@@ -4,7 +4,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <loader v-if="loading"></loader>
 
-      <div class="md-layout-item md-size-100" v-else="">
+      <div class="md-layout-item md-size-100" v-else>
         <v-data-table
                 :headers="headers"
                 :items="evaluations"
@@ -14,23 +14,24 @@
                 :rows-per-page-items="[50]"
         >
           <template slot="items" slot-scope="props">
-            <td class="text-xs-left" v-if="typeof props.item.unit == 'string'">{{ props.item.unit }}</td>
+            <td class="text-xs-left">{{ props.item.activityName }}</td>
             <td class="text-xs-left">
-              <md-icon class="fa fa-thumbs-up" v-if="props.item.team_work"></md-icon>
-              <md-icon class="fa fa-thumbs-down" v-else></md-icon>
+              <md-icon class="fa fa-thumbs-up" v-if="props.item.presentation"></md-icon>
+              <md-icon class="fa fa-thumbs-down down" v-else></md-icon>
             </td>
             <td class="text-xs-left">
               <md-icon class="fa fa-thumbs-up" v-if="props.item.timings"></md-icon>
-              <md-icon class="fa fa-thumbs-down" v-else></md-icon>
+              <md-icon class="fa fa-thumbs-down down" v-else></md-icon>
             </td>
             <td class="text-xs-left">
-              <md-icon class="fa fa-thumbs-up" v-if="props.item.presentation"></md-icon>
-              <md-icon class="fa fa-thumbs-down" v-else></md-icon>
+              <md-icon class="fa fa-thumbs-up" v-if="props.item.team_work"></md-icon>
+              <md-icon class="fa fa-thumbs-down down" v-else></md-icon>
             </td>
             <td class="text-xs-left">
               <md-icon class="fa fa-thumbs-up" v-if="props.item.excellence"></md-icon>
-              <md-icon class="fa fa-thumbs-down" v-else></md-icon>
+              <md-icon class="fa fa-thumbs-down down" v-else></md-icon>
             </td>
+            <td class="text-xs-left">{{ props.item.id }}</td>
           </template>
         </v-data-table>
       </div>
@@ -61,23 +62,18 @@ export default {
         sortBy: 'name'
       },
       headers: [
-        {text: 'Unidad', value: 'unit', align: 'left'},
-        {text: 'Trabajo en Equipo', value: 'team_work', align: 'left'},
+        {text: 'Actividad', value: 'activityName', align: 'left'},
+        {text: 'Participación', value: 'presentation', align: 'left'},
         {text: 'Tiempo', value: 'timings', align: 'left'},
-        {text: 'Presentación', value: 'presentation', align: 'left'},
-        {text: 'Excelencia', value: 'excellence', align: 'left'}
+        {text: 'Trabajo en Equipo', value: 'team_work', align: 'left'},
+        {text: 'Excelencia', value: 'excellence', align: 'left'},
+        {text: 'Evaluación', value: 'id', align: 'left'}
       ]
     }
   },
   watch: {
     evaluations: function (newval) {
-      newval.forEach((evaluation, index, array) => {
-        this.processed++
-        evaluation.unit.get().then(data => {
-          evaluation.unit = data.data().name
-        })
-        this.turnOffloader(array.length)
-      })
+      console.log(newval)
     }
   }
 }
@@ -86,5 +82,8 @@ export default {
 <style lang="scss" scoped>
   .md-progress-spinner {
     margin: 24px;
+  }
+  .down {
+    color: #bf360c !important;
   }
 </style>

@@ -133,7 +133,6 @@ export default {
     // can delete
     db.collection('clubs').orderBy('name').onSnapshot(snapshot => {
       this.clubes = []
-      console.log(snapshot.docs.length)
       snapshot.forEach(snapItem => {
         const item = snapItem.data()
         this.clubes.push({
@@ -199,7 +198,6 @@ export default {
       })
     },
     search (event) {
-      console.log('hola mundo')
       if (this.code.length === 4) {
         db.collection('units').where('code', '==', this.code).onSnapshot(snapshot => {
           this.clubes = []

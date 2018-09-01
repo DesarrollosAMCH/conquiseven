@@ -44,12 +44,14 @@ export default {
           snapshot.forEach(snapItem => {
             const item = snapItem.data()
             moment.locale('es')
-            this.events.push({
+            let event = {
+              id: snapItem.id,
               name: item.name,
               startDate: moment(String(item.startDate)).format('llll'),
               endDate: moment(String(item.endDate)).format('llll'),
               address: item.address,
               active: item.active,
+              units_count: 0,
               actions: [
                 {
                   url: snapItem.id,
@@ -57,7 +59,13 @@ export default {
                   icon: 'remove_red_eye'
                 }
               ]
+            }
+
+            let evento = db.collection('events').doc(event.id)
+            db.collection('unitsInEvents').where('event', '==', evento).onSnapshot(snapshot => {
+              event.units_count = snapshot.docs.length
             })
+            this.events.push(event)
           })
         })
       } else {

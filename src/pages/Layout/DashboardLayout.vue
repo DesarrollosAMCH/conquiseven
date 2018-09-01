@@ -4,7 +4,6 @@
 
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
-
       <!--
       <sidebar-link to="/dashboard">
         <md-icon>dashboard</md-icon>
@@ -16,8 +15,6 @@
         <md-icon>person</md-icon>
         <p>Usuarios</p>
       </sidebar-link>
-      -->
-      <!--
       <sidebar-link to="/clubes">
         <md-icon>content_paste</md-icon>
         <p>Clubes</p>
@@ -35,10 +32,17 @@
         <md-icon>library_books</md-icon>
         <p>Evaluaciones</p>
       </sidebar-link>
+
       <sidebar-link to="/evaluar-offline/">
         <md-icon>library_books</md-icon>
         <p>Evaluar Offline</p>
       </sidebar-link>
+      <!--
+      <sidebar-link to="/evaluaciones">
+        <md-icon>library_books</md-icon>
+        <p>Todas las Evaluaciones</p>
+      </sidebar-link>
+      -->
       <!--
       <sidebar-link to="/notifications">
         <md-icon>notifications</md-icon>

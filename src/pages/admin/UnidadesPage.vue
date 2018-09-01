@@ -34,19 +34,28 @@ export default {
     return {
       club: this.getClub(),
       clubName: '',
-      units: []
+      units: [],
+      relation: {}
     }
   },
   mounted () {
     db.collection('units').where('club', '==', this.club).onSnapshot(snapshot => {
       this.units = []
-
       this.club.get().then(value => {
         this.clubName = value.data().name
       })
 
       snapshot.forEach(snapItem => {
-        this.units.push(snapItem.data())
+        let unit = snapItem.data()
+        this.units.push(unit)
+
+        let relation = {}
+        relation.event = db.collection('events').doc('LhW02AHCAhl57jRGFefA')
+        relation.unit = db.collection('units').doc(snapItem.id)
+        relation.unitName = unit.name
+        relation.clubName = unit.clubName
+
+        // db.collection('unitsInEvents').doc().set(relation)
       })
     })
   },
@@ -58,8 +67,6 @@ export default {
         let club = _.find(localStorage.getItem('clubs'), ['id', this.$route.params.id])
         return JSON.parse(club)
       }
-    },
-    getUnits: function (club) {
     }
   }
 }

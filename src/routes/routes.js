@@ -18,6 +18,7 @@ import EvaluarPage from '@/pages/app/EvaluarPage'
 import EvaluarOfflinePage from '@/pages/app/EvaluarOfflinePage'
 import EvaluarActividadPage from '@/pages/app/EvaluarActividadPage'
 import ActividadPage from '@/pages/app/ActividadPage'
+import EvaluacionesPage from '@/pages/app/EvaluacionesPage'
 
 const routes = [
   {
@@ -92,6 +93,11 @@ const routes = [
         name: 'Detalle de Evento',
         component: EventosDetallePage
       },
+      {
+        path: 'eventos/:id/unidad/:unidad_id',
+        name: 'Detalle de Evento',
+        component: EventosDetallePage
+      },
       /**
        * * App Routes
        */
@@ -114,6 +120,11 @@ const routes = [
         path: 'evaluar-offline',
         name: 'Evaluar sin Conexión',
         component: EvaluarOfflinePage
+      },
+      {
+        path: 'evaluaciones',
+        name: 'Todas las Evaluaciones',
+        component: EvaluacionesPage
       }
     ]
   }

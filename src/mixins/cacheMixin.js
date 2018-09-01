@@ -106,7 +106,6 @@ export default {
     },
     cacheActivities: function (xevent, eventName) {
       db.collection('activities').where('event', '==', xevent).onSnapshot(snapshot => {
-        console.log(snapshot)
         snapshot.forEach(snapItem => {
           var item = snapItem.data()
           let activity = db.collection('activities').doc(snapItem.id)
@@ -127,7 +126,6 @@ export default {
     },
     cacheEvaluations: function (activity, activityName) {
       db.collection('evaluations').where('activity', '==', activity).onSnapshot(snapshot => {
-        console.log(snapshot)
         snapshot.forEach(snapItem => {
           var item = snapItem.data()
           this.cachedEvaluations.push({

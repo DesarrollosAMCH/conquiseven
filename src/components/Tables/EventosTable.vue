@@ -6,7 +6,7 @@
     <md-table v-model="events" :table-header-color="tableHeaderColor" v-else>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Nombre">{{ item.name }}</md-table-cell>
-        <md-table-cell md-label="Unidades Registradas">{{ item.units }}</md-table-cell>
+        <md-table-cell md-label="Unidades Registradas">{{ item.units_count }}</md-table-cell>
         <md-table-cell md-label="Fecha Inicio">{{ item.startDate }}</md-table-cell>
         <md-table-cell md-label="Fecha Termino">{{ item.endDate }}</md-table-cell>
         <md-table-cell md-label="Activo">
