@@ -28,8 +28,10 @@
       </md-step>
 
       <md-step id="second" md-label="Actividades Evaluadas" :md-description="(unit)?unit.name + ' / ' + unit.clubName + ' / ' + unit.score:''" :md-done.sync="second">
-        <evaluacionesunidad2-table :evaluations="unit.evaluations" :parentGoBack="goBack" :getParentEvaluation="getEvaluation" v-if="unit.new"></evaluacionesunidad2-table>
+        <evaluacionesunidad2-table :evaluations="unit.evaluations" :parentGoBack="goBack" :getParentEvaluation="getEvaluation"></evaluacionesunidad2-table>
+        <!--
         <evaluacionesunidad-table :evaluations="unit.evaluations" v-else=""></evaluacionesunidad-table>
+        -->
         <md-button @click="goBack('first')">Volver</md-button>
       </md-step>
       <md-step id="third" md-label="Detalle Evaluación" :md-description="(unit)?unit.name + ' / ' + unit.clubName + ' / ' + unit.score:''" :md-done.sync="second">
