@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="md-layout-item md-size-10">
-                                <md-button class="md-raised md-success hidden-lg-only" @click="search" :disabled="code.length != 4">Guardar</md-button>
+                                <md-button class="md-raised md-success hidden-lg-only" @click="search" :disabled="code.length < 3">Buscar</md-button>
                             </div>
 
                             <div class="md-layout-item md-size-100">
