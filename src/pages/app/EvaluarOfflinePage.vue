@@ -221,7 +221,7 @@ export default {
         this.error()
       }
       */
-      db.collection('activities').where('code', '==', this.activityCode.toLowerCase()).onSnapshot(snapshot => {
+      db.collection('activities').where('code', '==', this.activityCode.toUpperCase()).onSnapshot(snapshot => {
         if (snapshot.empty) { this.error() }
         snapshot.forEach(snapItem => {
           const item = snapItem.data()
@@ -251,8 +251,9 @@ export default {
       }
       */
 
-      db.collection('units').where('code', '==', this.unitCode.toLowerCase()).onSnapshot(snapshot => {
+      db.collection('units').where('code', '==', this.unitCode.toUpperCase()).onSnapshot(snapshot => {
         if (snapshot.empty) { this.error() }
+        console.log(snapshot)
         this.clubes = []
         snapshot.forEach(snapItem => {
           this.snackbarReset()

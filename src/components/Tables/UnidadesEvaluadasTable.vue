@@ -12,7 +12,7 @@
         >
           <template slot="items" slot-scope="props">
             <td class="text-xs-left">{{ props.item.name }}</td>
-            <td class="text-xs-left">{{ props.item.code.toUpperCase() }}</td>
+            <td class="text-xs-left">{{ props.item.code }}</td>
             <td class="text-xs-left">{{ props.item.clubName }}</td>
             <td class="text-xs-left">{{ props.item.zoneName }}</td>
             <td class="text-xs-left">{{ props.item.evalCount }}</td>

@@ -101,11 +101,9 @@ export default {
 
       this.units = []
       console.log('unitEvents')
-      console.log(snapshot)
       snapshot.forEach(snapItem => {
         var relation = snapItem.data()
         var unit = relation.unit
-
         unit.get().then(snapItemx => {
           let unitData = snapItemx.data()
           unitData.id = snapItemx.id
@@ -133,7 +131,6 @@ export default {
             })
           })
           unitData.evaluations = evaluations
-          // console.log(unitData)
           this.units.push(unitData)
         })
       })
