@@ -56,18 +56,8 @@
                                 </p>
                             </div>
 
-                            <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                <md-checkbox v-model="evaluation.presentation">Presentación</md-checkbox>
-                            </div>
-                            <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                <md-checkbox v-model="evaluation.timings">Tiempo</md-checkbox>
-                            </div>
-                            <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                <md-checkbox v-model="evaluation.excellence">Excelencia</md-checkbox>
-                            </div>
-
-                            <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                <md-checkbox v-model="evaluation.team_work">Trabajo en Equipo</md-checkbox>
+                            <div v-for="(value, prop) in actividad.document.items" :key="prop" class="md-layout-item md-size-50 md-xsmall-size-100">
+                                <md-checkbox v-model="evaluation[prop]">{{ prop }}</md-checkbox>
                             </div>
 
                             <div class="md-layout-item md-size-100 text-right">
@@ -107,41 +97,22 @@ export default {
   components: {
     Loader,
     UnidadesTable},
-  name: '',
+  name: 'evaluar-actividad-page',
   data () {
     return {
       found: false,
       loading: true,
       showSnackbar: false,
-      club: {}, // can delete
       unidad: null,
-      clubes: [], // can delete
       unidades: [],
       code: '',
       unidadLabel: 'Seleciona una Unidad', // can delete
       actividad: db.collection('activities').doc(this.$route.params.activity),
-      evaluation: {
-        excellence: false,
-        team_work: false,
-        timings: false,
-        presentation: false
-      }
+      evaluation: {}
     }
   },
   mounted () {
     this.loading = true
-    // can delete
-    db.collection('clubs').orderBy('name').onSnapshot(snapshot => {
-      this.clubes = []
-      snapshot.forEach(snapItem => {
-        const item = snapItem.data()
-        this.clubes.push({
-          id: snapItem.id,
-          name: item.name,
-          document: item
-        })
-      })
-    })
     // Do not delete
     var self = this
     this.actividad.get().then(snapItem => {
@@ -175,28 +146,17 @@ export default {
       if (newVal.length === 4) {
         this.search()
       }
+    },
+    actividad: function (newVal) {
+      let evaluation = newVal.document.items
+      let element = {}
+      for (var prop in evaluation) {
+        element[prop] = false
+      }
+      this.evaluation = element
     }
   },
   methods: {
-    // can delete
-    onClubChange (clubId) {
-      if (typeof clubId !== 'string') {
-        return
-      }
-
-      var club = db.collection('clubs').doc(clubId)
-      db.collection('units').where('club', '==', club).onSnapshot(snapshot => {
-        this.unidades = []
-        this.unidad = null
-        snapshot.forEach(snapItem => {
-          var item = snapItem.data()
-          this.unidades.push({
-            id: snapItem.id,
-            name: item.name
-          })
-        })
-      })
-    },
     search (event) {
       if (this.code.length === 4) {
         db.collection('units').where('code', '==', this.code).onSnapshot(snapshot => {
