@@ -6,6 +6,7 @@
 
       <div class="md-layout-item md-size-100" v-else>
         <v-data-table
+                v-if="!evaluations.evaluations"
                 :headers="headers"
                 :items="evaluations"
                 :loading="loading"
@@ -68,12 +69,15 @@ export default {
         {text: 'Trabajo en Equipo', value: 'team_work', align: 'left'},
         {text: 'Excelencia', value: 'excellence', align: 'left'},
         {text: 'Evaluación', value: 'id', align: 'left'}
+      ],
+      headers2: [
+        {text: 'Actividad', value: 'activityName', align: 'left'},
+        {text: 'Puntaje Parcial', value: 'presentation', align: 'left'}
       ]
     }
   },
   watch: {
     evaluations: function (newval) {
-      console.log(newval)
     }
   }
 }

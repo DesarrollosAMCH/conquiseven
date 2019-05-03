@@ -115,18 +115,20 @@ export default {
             let evalCount = snapshoty.docs.length
             snapshoty.forEach(snapItemy => {
               let data = snapItemy.data()
-              unitData.score += this.calculateScore(data)
+              let activityScore = this.calculateScore(data)
+              unitData.score += activityScore
               unitData.evalCount = evalCount
               db.collection('activities').doc(data.activity.id).get().then(snpachotv => {
                 let activity = snpachotv.data()
-                evaluations.push({
-                  id: snapItemy.id,
-                  activityName: activity.name,
-                  presentation: data.presentation,
-                  team_work: data.team_work,
-                  timings: data.timings,
-                  excellence: data.excellence
-                })
+                let evaluation = {}
+                evaluation.id = snapItemy.id
+                evaluation.activityName = activity.name
+                evaluation.presentation = data.presentation
+                evaluation.score = activityScore
+                for (var prop in data) {
+                  evaluation[prop] = data[prop]
+                }
+                evaluations.push(evaluation)
               })
             })
           })
