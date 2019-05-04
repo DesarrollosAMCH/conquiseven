@@ -6,6 +6,8 @@
         <v-data-table
                 v-else
                 :headers="headers"
+                :pagination.sync="pagination"
+                :rows-per-page-items="[50]"
                 :items="units"
                 :loading="loading"
                 :no-data-text="'No hay actividades que mostrar'"
@@ -85,6 +87,14 @@ export default {
       default: () => {
         return []
       }
+    },
+    pagination: {
+      descending: true,
+      page: 1,
+      rowsPerPage: 35,
+      sortBy: 'fat',
+      totalItems: 0,
+      rowsPerPageItems: [30, 20, 50]
     }
   },
   data () {
