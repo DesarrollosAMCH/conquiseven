@@ -84,18 +84,8 @@
                                     </p>
                                 </div>
 
-                                <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                    <md-checkbox v-model="evaluation.presentation">Presentación</md-checkbox>
-                                </div>
-                                <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                    <md-checkbox v-model="evaluation.timings">Tiempo</md-checkbox>
-                                </div>
-                                <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                    <md-checkbox v-model="evaluation.excellence">Excelencia</md-checkbox>
-                                </div>
-
-                                <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                    <md-checkbox v-model="evaluation.team_work">Trabajo en Equipo</md-checkbox>
+                                <div v-for="(value, prop) in actividad.items" :key="prop" class="md-layout-item md-size-50 md-xsmall-size-100">
+                                    <md-checkbox v-model="evaluation[prop]">{{ prop }}</md-checkbox>
                                 </div>
 
                                 <div class="md-layout-item md-size-100">
@@ -178,13 +168,7 @@ export default {
       unidad: null,
       unidades: [],
       unitCode: '',
-      evaluation: {
-        comment: '',
-        excellence: false,
-        team_work: false,
-        timings: false,
-        presentation: false
-      }
+      evaluation: {}
     }
   },
   watch: {
@@ -193,6 +177,15 @@ export default {
     },
     activityCode: function (newVal) {
       this.activityCode = newVal.toUpperCase()
+    },
+    actividad: function (newVal) {
+      console.log(newVal)
+      let evaluation = newVal.items
+      let element = {}
+      for (var prop in evaluation) {
+        element[prop] = false
+      }
+      this.evaluation = element
     }
   },
   mounted () {
@@ -210,27 +203,19 @@ export default {
       }
     },
     search () {
-      /*
-      let activities = JSON.parse(localStorage.getItem('activities'))
-      let result = this.lodash.find(activities, ['code', this.activityCode.toLowerCase()])
-      if (typeof result !== 'undefined') {
-        this.actividad = result
-        this.showSnackbarError = false
-        // localStorage.setItem('mainActivity', this.actividad)
-      } else {
-        this.error()
-      }
-      */
-      db.collection('activities').where('code', '==', this.activityCode.toUpperCase()).onSnapshot(snapshot => {
+      db.collection('activities').where('code', '==', this.activityCode).onSnapshot(snapshot => {
         if (snapshot.empty) { this.error() }
         snapshot.forEach(snapItem => {
           const item = snapItem.data()
+          console.log(item)
           let actividad = {
             id: snapItem.id,
             name: item.name,
             description: item.description,
-            time: item.time
+            time: item.time,
+            items: item.items
           }
+          console.log(actividad)
           this.$store.commit('setActivity', actividad)
           this.actividad = this.$store.state.activity
           localStorage.setItem('defaultActivity', JSON.stringify(actividad))
@@ -238,21 +223,12 @@ export default {
       })
     },
     searchByUnitCode () {
-      /*
-      let units = JSON.parse(localStorage.getItem('units'))
-      let result = this.lodash.find(units, ['code', this.unitCode.toLowerCase()])
-      if (typeof result !== 'undefined') {
-        this.unidad = result
-        this.unidades = []
-        this.unidades.push(this.unidad)
-        this.showSnackbarError = false
-      } else {
-        this.error()
-      }
-      */
-
+      console.log(this.unitCode)
       db.collection('units').where('code', '==', this.unitCode.toUpperCase()).onSnapshot(snapshot => {
-        if (snapshot.empty) { this.error() }
+        if (snapshot.empty) {
+          this.error()
+          console.log('error')
+        }
         console.log(snapshot)
         this.clubes = []
         snapshot.forEach(snapItem => {
@@ -288,7 +264,8 @@ export default {
       // this.showSnackbar = true
       this.successfull()
       this.reset()
-      setTimeout(() => this.$router.push({path: '/actividad/' + this.actividad.id}), 2000)
+      // setTimeout(() => this.$router.push({path: '/actividad/' + this.actividad.id}), 2000)
+      setTimeout(() => this.$router.push({path: '/evaluar-offline/'}), 2000)
     },
     saveOffline () {
       this.evaluation.unit = this.unidad.id

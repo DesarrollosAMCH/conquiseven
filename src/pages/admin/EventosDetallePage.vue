@@ -55,19 +55,12 @@ export default {
     }
   },
   methods: {
-    calculateScore: function (evaluation) {
-      let points = {
-        team_work: 20,
-        presentation: 10,
-        excellence: 45,
-        timings: 25
-      }
-
+    calculateScore: function (evaluation, items) {
       let score = 0
       for (let item in evaluation) {
         if (typeof evaluation[item] === 'boolean') {
           if (evaluation[item]) {
-            score += points[item]
+            score += Number(items[item])
           }
         }
       }
@@ -100,7 +93,6 @@ export default {
       this.unitsCount = snapshot.docs.length
 
       this.units = []
-      console.log('unitEvents')
       snapshot.forEach(snapItem => {
         var relation = snapItem.data()
         var unit = relation.unit
@@ -113,11 +105,12 @@ export default {
             let evalCount = snapshoty.docs.length
             snapshoty.forEach(snapItemy => {
               let data = snapItemy.data()
-              let activityScore = this.calculateScore(data)
-              unitData.score += activityScore
               unitData.evalCount = evalCount
+              let activityScore
               db.collection('activities').doc(data.activity.id).get().then(snpachotv => {
                 let activity = snpachotv.data()
+                activityScore = this.calculateScore(data, activity.items)
+                unitData.score += activityScore
                 let evaluation = {}
                 evaluation.id = snapItemy.id
                 evaluation.activityName = activity.name

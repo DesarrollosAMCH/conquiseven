@@ -9,9 +9,11 @@
                 <li>
                     <router-link :to="{path:'/eventos'}">Eventos</router-link>
                 </li>
+                <!--
                 <li>
                     <router-link :to="{path:'/evaluar'}">Evaluar</router-link>
                 </li>
+                -->
                 <li>
                     <router-link :to="{path:'/evaluar-offline'}">Evaluar sin conección</router-link>
                 </li>

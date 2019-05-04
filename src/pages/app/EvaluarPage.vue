@@ -21,7 +21,7 @@
                             </div>
 
                             <div class="md-layout-item md-size-100 text-right">
-                                <md-button class="md-raised md-success" @click="search" :disabled="code.length != 5">Enviar</md-button>
+                                <md-button class="md-raised md-success" @click="search" :disabled="code.length < 3">Enviar</md-button>
                             </div>
                           </div>
                         </form>
