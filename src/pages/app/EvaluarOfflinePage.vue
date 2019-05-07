@@ -64,7 +64,7 @@
                                 <div class="md-layout-item md-size-100 md-xsmall-size-50">
                                     <md-field>
                                         <label>Código Unidad</label>
-                                        <md-input @change="search" v-model="unitCode"></md-input>
+                                        <md-input v-model="unitCode"></md-input>
                                     </md-field>
                                 </div>
 
@@ -131,17 +131,16 @@
         <md-snackbar :md-duration="10000" :md-active.sync="showSnackbarError" md-persistent>
             <span>
                 <md-icon class="md-size-2x" style="color: red">error</md-icon>
-                Lo sentimos, el código no es válido.
+                Lo sentimos, el código no es válido..
             </span>
         </md-snackbar>
-        <!--
+
         <md-snackbar :md-duration="10000" :md-active.sync="showSnackbarWarning" md-persistent>
             <span>
                 <md-icon class="md-size-2x" style="color: orange">warning</md-icon>
                 Unidad ya evaluada en el evento.
             </span>
         </md-snackbar>
-        -->
     </div>
 </template>
 
@@ -204,7 +203,10 @@ export default {
     },
     search () {
       db.collection('activities').where('code', '==', this.activityCode).onSnapshot(snapshot => {
-        if (snapshot.empty) { this.error() }
+        if (snapshot.empty) {
+          this.error()
+          console.log('activity search')
+        }
         snapshot.forEach(snapItem => {
           const item = snapItem.data()
           console.log(item)
@@ -223,35 +225,34 @@ export default {
       })
     },
     searchByUnitCode () {
-      console.log(this.unitCode)
       db.collection('units').where('code', '==', this.unitCode.toUpperCase()).onSnapshot(snapshot => {
         if (snapshot.empty) {
           this.error()
-          console.log('error')
-        }
-        console.log(snapshot)
-        this.clubes = []
-        snapshot.forEach(snapItem => {
-          this.snackbarReset()
-          let frUnidad = db.collection('units').doc(snapItem.id)
-          let frActividad = db.collection('activities').doc(this.actividad.id)
-          db.collection('evaluations').where('unit', '==', frUnidad).where('activity', '==', frActividad).onSnapshot(snapshot => {
-            if (snapshot.docs.length) {
-              this.warning()
-            }
-          })
+        } else {
+          this.clubes = []
+          snapshot.forEach(snapItem => {
+            this.snackbarReset()
+            let frUnidad = db.collection('units').doc(snapItem.id)
+            let frActividad = db.collection('activities').doc(this.actividad.id)
+            db.collection('evaluations').where('unit', '==', frUnidad).where('activity', '==', frActividad).onSnapshot(snapshot => {
+              if (snapshot.docs.length) {
+                console.log('warning!')
+                this.warning()
+              }
+            })
 
-          const item = snapItem.data()
-          this.unidades = []
-          this.unidad = {
-            id: snapItem.id,
-            name: item.name,
-            clubName: item.clubName,
-            zoneName: item.zoneName,
-            active: true
-          }
-          this.unidades.push(this.unidad)
-        })
+            const item = snapItem.data()
+            this.unidades = []
+            this.unidad = {
+              id: snapItem.id,
+              name: item.name,
+              clubName: item.clubName,
+              zoneName: item.zoneName,
+              active: true
+            }
+            this.unidades.push(this.unidad)
+          })
+        }
       })
     },
     save () {
@@ -261,11 +262,10 @@ export default {
       this.evaluation.date = moment().format('YYYY-MM-DD HH:mm')
 
       db.collection('evaluations').doc().set(this.evaluation)
-      // this.showSnackbar = true
       this.successfull()
       this.reset()
       // setTimeout(() => this.$router.push({path: '/actividad/' + this.actividad.id}), 2000)
-      setTimeout(() => this.$router.push({path: '/evaluar-offline/'}), 2000)
+      // setTimeout(() => this.$router.push({path: '/evaluar-offline/'}), 3000)
     },
     saveOffline () {
       this.evaluation.unit = this.unidad.id
@@ -281,21 +281,18 @@ export default {
       // setTimeout(() => this.$router.push({path: '/actividad/TU6WCJnqM0lMvZ5EMIyL'}), 2000)
     },
     successfull () {
-      this.snackbarReset()
       this.showSnackbar = true
     },
     warning () {
-      this.snackbarReset()
       this.showSnackbarWarning = true
     },
     error () {
-      this.snackbarReset()
       this.showSnackbarError = true
     },
     snackbarReset () {
       this.showSnackbarError = false
-      this.showSnackbarWarning = false
-      this.showSnackbar = false
+      // this.showSnackbarWarning = false
+      // this.showSnackbar = false
     },
     reset () {
       this.unidad = null
