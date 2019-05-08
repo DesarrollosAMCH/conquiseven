@@ -16,6 +16,7 @@
           <template slot="items" slot-scope="props">
             <td class="text-xs-left">{{ props.item.activityName }}</td>
             <td class="text-xs-left">{{ props.item.score }}</td>
+            <td class="text-xs-left">{{ props.item.id }}</td>
             <td class="text-xs-left">
               <a @click="showDetail(props.item.id)" :title="'Ver detalle de evaluación para el evento '+props.item.activityName">
                 <md-icon>remove_red_eye</md-icon>
@@ -54,8 +55,9 @@ export default {
       },
       headers: [
         {text: 'Actividad', value: 'activityName', align: 'left'},
-        {text: 'Puntaje Parcial', value: 'presentation', align: 'left'},
-        {text: 'Ver detalle', value: 'detalle', align: 'left'}
+        {text: 'Puntaje Parcial', value: 'score', align: 'left'},
+        {text: 'Evaluación', value: 'id', align: 'left'},
+        {text: 'Ver detalle', align: 'left'}
       ]
     }
   },
