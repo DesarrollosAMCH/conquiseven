@@ -4,7 +4,7 @@
 
       </slot>
       <div class="md-card-avatar">
-        <img class="img" :src="cardImage" v-if="cardImage">
+        <img class="img" :src="event.image" v-if="cardImage">
         <font-awesome-icon v-else icon="flag" size="4x" />
       </div>
 

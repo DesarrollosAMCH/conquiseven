@@ -15,11 +15,13 @@
             <td class="text-xs-left">{{ props.item.name }}</td>
             <td class="text-xs-left">{{ props.item.code.toUpperCase() }}</td>
             <!--<td class="text-xs-left" v-if="typeof props.item.category == 'string'">{{ props.item.category }}</td>-->
+            <!--
             <td class="text-xs-left">
               <a @click="redirect('/evaluar/'+props.item.id)" :title="'Evaluar '+props.item.name">
                 <md-icon>assignment</md-icon>
               </a>
             </td>
+            -->
             <td class="text-xs-left">{{ props.item.count_evaluations }}</td>
           </template>
         </v-data-table>
@@ -50,7 +52,6 @@ export default {
       headers: [
         {text: 'Nombre', value: 'name', align: 'left'},
         {text: 'Código', value: 'code', align: 'left'},
-        {text: 'Evaluar', value: 'time', align: 'left'},
         {text: 'Evaluaciones', value: 'count_evaluations', align: 'left'}
         // {text: 'Categoria', value: 'category', align: 'left'}
       ]

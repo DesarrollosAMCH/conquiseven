@@ -74,7 +74,29 @@ export default {
   },
   mounted () {
     // this.loading = true
+
+    // To Search Activities with reference Object
     db.collection('activities').where('event', '==', this.event).onSnapshot(snapshot => {
+      this.activities = []
+
+      this.event.get().then(value => {
+        this.currentEvent = value.data()
+      })
+
+      snapshot.forEach(snapItem => {
+        var activity = snapItem.data()
+        activity.id = snapItem.id
+        activity.name = activity.name.replace(/\b\w/g, l => l.toUpperCase())
+
+        let actividad = db.collection('activities').doc(activity.id)
+        db.collection('evaluations').where('activity', '==', actividad).onSnapshot(snapshot => {
+          activity.count_evaluations = snapshot.docs.length
+        })
+        this.activities.push(activity)
+      })
+    })
+    // To Search Activities with id as string
+    db.collection('activities').where('event', '==', '/events/' + this.event.id).onSnapshot(snapshot => {
       this.activities = []
 
       this.event.get().then(value => {
