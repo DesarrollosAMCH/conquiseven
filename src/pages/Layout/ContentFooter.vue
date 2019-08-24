@@ -3,11 +3,16 @@
     <div class="container">
         <nav>
             <ul>
+                <!--
               <li>
                 <router-link :to="{path:'/clubes'}">Clubes</router-link>
               </li>
+              -->
                 <li>
                     <router-link :to="{path:'/eventos'}">Eventos</router-link>
+                </li>
+                <li>
+                    <router-link :to="{path:'/evaluaciones'}">Evaluaciones</router-link>
                 </li>
                 <!--
                 <li>

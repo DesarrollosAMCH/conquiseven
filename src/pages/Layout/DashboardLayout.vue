@@ -15,7 +15,7 @@
         <md-icon>person</md-icon>
         <p>Usuarios</p>
       </sidebar-link>
-      -->
+
       <sidebar-link to="/clubes">
         <md-icon>content_paste</md-icon>
         <p>Clubes</p>
@@ -29,13 +29,13 @@
         <md-icon>assignment</md-icon>
         <p>Evaluar</p>
       </sidebar-link>
-      -->
+
 
       <sidebar-link :to="'/actividad/' + actividad.id" v-if="actividad !== null">
         <md-icon>library_books</md-icon>
         <p>Evaluaciones</p>
       </sidebar-link>
-
+      -->
       <sidebar-link to="/evaluar-offline/">
         <md-icon>library_books</md-icon>
         <p>Evaluar Offline</p>

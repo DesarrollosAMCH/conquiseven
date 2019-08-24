@@ -265,9 +265,14 @@ export default {
       })
     },
     save () {
+      /*
       this.evaluation.unit = db.collection('units').doc(this.unidad.id)
       this.evaluation.activity = db.collection('activities').doc(this.actividad.id)
       this.evaluation.event = db.collection('events').doc(this.evento.id)
+      */
+      this.evaluation.unit = '/units/'+this.unidad.id
+      this.evaluation.activity = '/activities/'+this.actividad.id
+      this.evaluation.event = '/events/'+this.evento.id
       moment.locale('es')
       this.evaluation.date = moment().format('YYYY-MM-DD HH:mm')
 

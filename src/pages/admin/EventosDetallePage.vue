@@ -116,6 +116,7 @@ export default {
       })
     })
 
+    /*
     db.collection('unitsInEvents').where('event', '==', this.event).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length
 
@@ -128,7 +129,7 @@ export default {
           unitData.id = snapItemx.id
           let evaluations = []
           unitData.score = 0
-          db.collection('evaluations').where('unit', '==', relation.unit).onSnapshot(snapshoty => {
+          db.collection('evaluations').where('unit', '==', unit).onSnapshot(snapshoty => {
             let evalCount = snapshoty.docs.length
             snapshoty.forEach(snapItemy => {
               let data = snapItemy.data()
@@ -155,6 +156,7 @@ export default {
         })
       })
     })
+    */
 
     db.collection('unitsInEvents').where('event', '==', '/events/' + this.event.id).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length
@@ -162,22 +164,22 @@ export default {
       this.units = []
       snapshot.forEach(snapItem => {
         var participation = snapItem.data()
-        var unit = participation.unit.split('/')
-        db.collection('units').doc(unit[2]).onSnapshot(snapItemx => {
+        var split = participation.unit.split('/')
+        var unit = split[2]
+        db.collection('units').doc(unit).onSnapshot(snapItemx => {
         // unit.get().then(snapItemx => {
           let unitData = snapItemx.data()
-          console.log('unit data')
-          console.log(unitData)
           unitData.id = snapItemx.id
           let evaluations = []
           unitData.score = 0
-          db.collection('evaluations').where('unit', '==', participation.unit).onSnapshot(snapshoty => {
+          db.collection('evaluations').where('unit', '==', participation.unit).where('event', '==', participation.event).onSnapshot(snapshoty => {
             let evalCount = snapshoty.docs.length
             snapshoty.forEach(snapItemy => {
               let data = snapItemy.data()
               unitData.evalCount = evalCount
               let activityScore
-              db.collection('activities').doc(data.activity.id).get().then(snpachotv => {
+              let split = data.activity.split('/')
+              db.collection('activities').doc(split[2]).get().then(snpachotv => {
                 let activity = snpachotv.data()
                 activityScore = this.calculateScore(data, activity.items)
                 unitData.score += activityScore
