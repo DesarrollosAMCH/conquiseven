@@ -116,7 +116,7 @@ export default {
       })
     })
 
-    /*
+
     db.collection('unitsInEvents').where('event', '==', this.event).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length
 
@@ -156,7 +156,7 @@ export default {
         })
       })
     })
-    */
+
 
     db.collection('unitsInEvents').where('event', '==', '/events/' + this.event.id).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length

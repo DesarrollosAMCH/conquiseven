@@ -62,8 +62,11 @@ export default {
             }
 
             let evento = db.collection('events').doc(event.id)
+            db.collection('unitsInEvents').where('event', '==', '/events/' + event.id).onSnapshot(snapshot => {
+              event.units_count += snapshot.docs.length
+            })
             db.collection('unitsInEvents').where('event', '==', evento).onSnapshot(snapshot => {
-              event.units_count = snapshot.docs.length
+              event.units_count += snapshot.docs.length
             })
             this.events.push(event)
           })
