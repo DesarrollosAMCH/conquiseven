@@ -164,6 +164,7 @@ export default {
       showSnackbarWarning: false,
       activityCode: '',
       actividad: this.$store.state.activity,
+      evento: null,
       unidad: null,
       unidades: [],
       unitCode: '',
@@ -178,7 +179,7 @@ export default {
       this.activityCode = newVal.toUpperCase()
     },
     actividad: function (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       let evaluation = newVal.items
       let element = {}
       for (var prop in evaluation) {
@@ -191,6 +192,14 @@ export default {
     this.cacheAllData()
     this.$store.commit('setActivity', this.getActividad())
     this.actividad = this.$store.state.activity
+    let obj_actividad = db.collection('activities').doc(this.actividad.id)
+    let thisx = this
+    obj_actividad.get().then(function(doc){
+      let split = doc.data().event.split('/')
+      let event_id = split[2]
+      thisx.evento = db.collection('activities').doc(event_id)
+    })
+
   },
   methods: {
     getActividad () {
@@ -205,11 +214,11 @@ export default {
       db.collection('activities').where('code', '==', this.activityCode).onSnapshot(snapshot => {
         if (snapshot.empty) {
           this.error()
-          console.log('activity search')
+          // console.log('activity search')
         }
         snapshot.forEach(snapItem => {
           const item = snapItem.data()
-          console.log(item)
+          // console.log(item)
           let actividad = {
             id: snapItem.id,
             name: item.name,
@@ -217,7 +226,7 @@ export default {
             time: item.time,
             items: item.items
           }
-          console.log(actividad)
+          // console.log(actividad)
           this.$store.commit('setActivity', actividad)
           this.actividad = this.$store.state.activity
           localStorage.setItem('defaultActivity', JSON.stringify(actividad))
@@ -236,7 +245,7 @@ export default {
             let frActividad = db.collection('activities').doc(this.actividad.id)
             db.collection('evaluations').where('unit', '==', frUnidad).where('activity', '==', frActividad).onSnapshot(snapshot => {
               if (snapshot.docs.length) {
-                console.log('warning!')
+                // console.log('warning!')
                 this.warning()
               }
             })
@@ -258,6 +267,7 @@ export default {
     save () {
       this.evaluation.unit = db.collection('units').doc(this.unidad.id)
       this.evaluation.activity = db.collection('activities').doc(this.actividad.id)
+      this.evaluation.event = db.collection('events').doc(this.evento.id)
       moment.locale('es')
       this.evaluation.date = moment().format('YYYY-MM-DD HH:mm')
 
