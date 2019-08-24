@@ -54,7 +54,7 @@
 
 <script>
 
-export default{
+export default {
   data () {
     return {
       selectedEmployee: null,
