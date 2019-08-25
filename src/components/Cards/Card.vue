@@ -3,7 +3,7 @@
       <slot :event="event">
 
       </slot>
-      <div class="md-card-avatar">
+      <div class="md-card-avatar" v-if="event">
         <img class="img" :src="event.image" v-if="cardImage">
         <font-awesome-icon v-else icon="flag" size="4x" />
       </div>
