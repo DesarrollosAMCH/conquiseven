@@ -79,12 +79,9 @@ export default {
     // To Search Activities with reference Object
     /*
     db.collection('activities').where('event', '==', this.event).onSnapshot(snapshot => {
-
-
       this.event.get().then(value => {
         this.currentEvent = value.data()
       })
-
       snapshot.forEach(snapItem => {
         var activity = snapItem.data()
         activity.id = snapItem.id
@@ -100,7 +97,6 @@ export default {
     */
     // To Search Activities with id as string
     db.collection('activities').where('event', '==', '/events/' + this.event.id).onSnapshot(snapshot => {
-
       this.event.get().then(value => {
         this.currentEvent = value.data()
       })
@@ -111,17 +107,15 @@ export default {
         activity.name = activity.name.replace(/\b\w/g, l => l.toUpperCase())
 
         // let actividad = db.collection('activities').doc(activity.id)
-        db.collection('evaluation').where('activity', '==', '/activities/'+activity.id).onSnapshot(snapshot => {
+        db.collection('evaluation').where('activity', '==', '/activities/' + activity.id).onSnapshot(snapshot => {
           activity.count_evaluations = snapshot.docs.length
         })
         this.activities.push(activity)
       })
     })
 
-
     db.collection('unitsInEvents').where('event', '==', this.event).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length
-
       snapshot.forEach(snapItem => {
         var relation = snapItem.data()
         var unit = relation.unit
@@ -198,7 +192,6 @@ export default {
         })
       })
     })
-
   }
 }
 </script>

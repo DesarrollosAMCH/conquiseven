@@ -24,13 +24,10 @@
         <md-icon>bubble_chart</md-icon>
         <p>Eventos</p>
       </sidebar-link>
-      <!--
       <sidebar-link to="/evaluar">
         <md-icon>assignment</md-icon>
         <p>Evaluar</p>
       </sidebar-link>
-
-
       <sidebar-link :to="'/actividad/' + actividad.id" v-if="actividad !== null">
         <md-icon>library_books</md-icon>
         <p>Evaluaciones</p>

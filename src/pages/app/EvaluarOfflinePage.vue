@@ -174,14 +174,13 @@ export default {
     this.cacheAllData()
     this.$store.commit('setActivity', this.getActividad())
     this.actividad = this.$store.state.activity
-    let obj_actividad = db.collection('activities').doc(this.actividad.id)
+    let objActividad = db.collection('activities').doc(this.actividad.id)
     let thisx = this
-    obj_actividad.get().then(function(doc){
+    objActividad.get().then(function (doc) {
       let split = doc.data().event.split('/')
-      let event_id = split[2]
-      thisx.evento = db.collection('activities').doc(event_id)
+      let eventId = split[2]
+      thisx.evento = db.collection('activities').doc(eventId)
     })
-
   },
   methods: {
     getActividad () {
@@ -250,30 +249,16 @@ export default {
       })
     },
     save () {
-      this.evaluation.unit = '/units/'+this.unidad.id
-      this.evaluation.activity = '/activities/'+this.actividad.id
+      this.evaluation.unit = '/units/' + this.unidad.id
+      this.evaluation.activity = '/activities/' + this.actividad.id
       this.evaluation.event = this.actividad.event
       moment.locale('es')
       this.evaluation.date = moment().format('YYYY-MM-DD HH:mm')
-
       db.collection('evaluations').doc().set(this.evaluation)
       this.successfull()
       this.reset()
       // setTimeout(() => this.$router.push({path: '/actividad/' + this.actividad.id}), 2000)
       // setTimeout(() => this.$router.push({path: '/evaluar-offline/'}), 3000)
-    },
-    saveOffline () {
-      this.evaluation.unit = this.unidad.id
-      this.evaluation.activity = this.actividad.id
-      let cachedEvaluations = localStorage.getItem('evaluations')
-      let evaluations = cachedEvaluations ? JSON.parse(cachedEvaluations) : []
-      evaluations.push(this.evaluation)
-      localStorage.setItem('evaluations', JSON.stringify(evaluations))
-      this.successfull()
-      setTimeout(() => this.reset(), 1000)
-
-      // db.collection('evaluations').doc().set(this.evaluation)
-      // setTimeout(() => this.$router.push({path: '/actividad/TU6WCJnqM0lMvZ5EMIyL'}), 2000)
     },
     successfull () {
       this.showSnackbar = true

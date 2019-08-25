@@ -62,9 +62,6 @@ export default {
     goBack: function (step) {
       this.parentGoBack(step)
     }
-  },
-  mounted () {
-    console.log(this.evaluations)
   }
 }
 </script>

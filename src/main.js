@@ -78,7 +78,7 @@ if ('serviceWorker' in navigator) {
         // console.log('ServiceWorker registered')
       })
       .catch(function (error) {
-        // console.log('ServiceWorker failed!', error)
+        console.error('ServiceWorker failed!', error)
       })
   })
 } else {

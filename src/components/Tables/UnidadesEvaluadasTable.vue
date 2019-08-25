@@ -138,7 +138,8 @@ export default {
       let headers = []
       headers.push({text: 'Actividad', value: 'activityName', align: 'left'})
       for (var prop in this.evaluation[0]) {
-        if (typeof this.evaluation[0][prop] === 'boolean') {
+        console.log('element', this.evaluation[0][prop])
+        if ((typeof this.evaluation[0][prop] === 'boolean') || (this.evaluation[0][prop] === 'on')) {
           headers.push({text: prop, value: prop, align: 'left', type: 'boolean'})
         }
       }
