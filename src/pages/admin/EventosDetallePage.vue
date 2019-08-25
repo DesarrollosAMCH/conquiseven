@@ -59,11 +59,11 @@ export default {
       let score = 0
       for (let item in items) {
         if (evaluation.hasOwnProperty(item)) {
-          console.log('coincide: ' + evaluation[item])
-          console.log(item)
-          console.log(items[item])
-          console.log(evaluation)
-          console.log('------------------')
+          // console.log('coincide: ' + evaluation[item])
+          // console.log(item)
+          // console.log(items[item])
+          // console.log(evaluation)
+          // console.log('------------------')
           if (evaluation[item] === true || evaluation[item] === 'on') {
             score += Number(items[item])
           }
