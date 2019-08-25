@@ -77,7 +77,7 @@ export default {
     // this.loading = true
 
     // To Search Activities with reference Object
-
+    /*
     db.collection('activities').where('event', '==', this.event).onSnapshot(snapshot => {
 
 
@@ -97,6 +97,7 @@ export default {
         this.activities.push(activity)
       })
     })
+    */
     // To Search Activities with id as string
     db.collection('activities').where('event', '==', '/events/' + this.event.id).onSnapshot(snapshot => {
 
@@ -109,8 +110,8 @@ export default {
         activity.id = snapItem.id
         activity.name = activity.name.replace(/\b\w/g, l => l.toUpperCase())
 
-        let actividad = db.collection('activities').doc(activity.id)
-        db.collection('evaluations').where('activity', '==', actividad).onSnapshot(snapshot => {
+        // let actividad = db.collection('activities').doc(activity.id)
+        db.collection('evaluation').where('activity', '==', '/activities/'+activity.id).onSnapshot(snapshot => {
           activity.count_evaluations = snapshot.docs.length
         })
         this.activities.push(activity)

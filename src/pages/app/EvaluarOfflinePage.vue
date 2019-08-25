@@ -217,8 +217,10 @@ export default {
           // console.log('activity search')
         }
         snapshot.forEach(snapItem => {
-          const item = snapItem.data()
-          // console.log(item)
+          const actividad = snapItem.data()
+          actividad.id = snapItem.id
+
+          /*
           let actividad = {
             id: snapItem.id,
             name: item.name,
@@ -226,6 +228,7 @@ export default {
             time: item.time,
             items: item.items
           }
+          */
           // console.log(actividad)
           this.$store.commit('setActivity', actividad)
           this.actividad = this.$store.state.activity
@@ -272,7 +275,7 @@ export default {
       */
       this.evaluation.unit = '/units/'+this.unidad.id
       this.evaluation.activity = '/activities/'+this.actividad.id
-      this.evaluation.event = '/events/'+this.evento.id
+      this.evaluation.event = this.actividad.event
       moment.locale('es')
       this.evaluation.date = moment().format('YYYY-MM-DD HH:mm')
 
