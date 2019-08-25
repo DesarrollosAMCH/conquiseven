@@ -15,6 +15,7 @@
                 </md-card>
             </div>
             <div class="md-layout-item md-medium-size-100 md-size-100">
+
                 <md-card>
                     <md-card-header data-background-color="green">
                         <h4 class="title">Unidades</h4>
@@ -76,8 +77,9 @@ export default {
     // this.loading = true
 
     // To Search Activities with reference Object
+
     db.collection('activities').where('event', '==', this.event).onSnapshot(snapshot => {
-      this.activities = []
+
 
       this.event.get().then(value => {
         this.currentEvent = value.data()
@@ -97,7 +99,6 @@ export default {
     })
     // To Search Activities with id as string
     db.collection('activities').where('event', '==', '/events/' + this.event.id).onSnapshot(snapshot => {
-      this.activities = []
 
       this.event.get().then(value => {
         this.currentEvent = value.data()
@@ -120,7 +121,6 @@ export default {
     db.collection('unitsInEvents').where('event', '==', this.event).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length
 
-      this.units = []
       snapshot.forEach(snapItem => {
         var relation = snapItem.data()
         var unit = relation.unit
@@ -156,12 +156,9 @@ export default {
         })
       })
     })
-
-
     db.collection('unitsInEvents').where('event', '==', '/events/' + this.event.id).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length
 
-      this.units = []
       snapshot.forEach(snapItem => {
         var participation = snapItem.data()
         var split = participation.unit.split('/')
@@ -200,6 +197,7 @@ export default {
         })
       })
     })
+
   }
 }
 </script>

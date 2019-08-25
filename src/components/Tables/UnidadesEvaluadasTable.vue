@@ -6,8 +6,9 @@
         <v-data-table
                 v-else
                 :headers="headers"
-                :pagination.sync="pagination"
+                :pagination="pagination"
                 :rows-per-page-items="[50]"
+                default-sort="score:desc"
                 :items="units"
                 :loading="loading"
                 :no-data-text="'No hay actividades que mostrar'"
@@ -92,7 +93,7 @@ export default {
       descending: true,
       page: 1,
       rowsPerPage: 35,
-      sortBy: 'fat',
+      sortBy: 'score',
       totalItems: 0,
       rowsPerPageItems: [30, 20, 50]
     }
@@ -160,7 +161,7 @@ export default {
   },
   watch: {
     totalRows: function (newVal) {
-      console.log('Total ' + newVal)
+      // console.log('Total ' + newVal)
     },
     units: function (newVal) {
       return this.lodash.orderBy(newVal, ['clubName'])
