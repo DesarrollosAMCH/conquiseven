@@ -43,24 +43,6 @@
 
                         <form novalidate>
                             <div class="md-layout">
-                                <!--
-                                <div class="md-layout-item md-small-size-100 md-size-50">
-                                    <md-field>
-                                        <label for="club-select">Selecciona un Club</label>
-                                        <md-select v-model="club" name="club" id="club-select" @md-selected="onClubChange">
-                                            <md-option v-for="club in clubes" v-bind:key='club.id' :value="club.id">{{ club.name }}</md-option>
-                                        </md-select>
-                                    </md-field>
-                                </div>
-                                <div class="md-layout-item md-small-size-100 md-size-50">
-                                    <md-field>
-                                        <label for="club-select">{{ unidadLabel }}</label>
-                                        <md-select v-model="unidad" name="unidad" id="unidad-select" :disabled="!unidades.length">
-                                            <md-option v-for="unidad in unidades" v-bind:key='unidad.id' :value="unidad.id">{{ unidad.name }}</md-option>
-                                        </md-select>
-                                    </md-field>
-                                </div>
-                                -->
                                 <div class="md-layout-item md-size-100 md-xsmall-size-50">
                                     <md-field>
                                         <label>Código Unidad</label>
@@ -268,11 +250,6 @@ export default {
       })
     },
     save () {
-      /*
-      this.evaluation.unit = db.collection('units').doc(this.unidad.id)
-      this.evaluation.activity = db.collection('activities').doc(this.actividad.id)
-      this.evaluation.event = db.collection('events').doc(this.evento.id)
-      */
       this.evaluation.unit = '/units/'+this.unidad.id
       this.evaluation.activity = '/activities/'+this.actividad.id
       this.evaluation.event = this.actividad.event
@@ -316,12 +293,7 @@ export default {
       this.unidad = null
       this.unidades = []
       this.unitCode = ''
-      this.evaluation = {
-        excellence: false,
-        team_work: false,
-        timings: false,
-        presentation: false
-      }
+      this.evaluation = {}
     }
   }
 }
