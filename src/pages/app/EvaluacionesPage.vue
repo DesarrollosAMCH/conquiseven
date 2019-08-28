@@ -38,13 +38,15 @@ export default {
     return {
       showSnackbar: false,
       actividad: this.getActividad(),
-      activities: []
+      activities: [],
+      evaluations: []
     }
   },
   mounted () {
-    this.actividad = this.getActividad()
     this.loading = true
-
+    // console.log('actividad', this.actividad)
+    let count_evaluations = 0
+    /*
     db.collection('activities').orderBy('order').onSnapshot(snapshot => {
       this.activities = []
       snapshot.forEach(snapItem => {
@@ -55,9 +57,22 @@ export default {
         }
 
         db.collection('evaluations').where('activity', '==', snapItem).onSnapshot(snapshot => {
-          activity.count_evaluations = snapshot.docs.length
+           activity.count_evaluations = snapshot.docs.length
         })
       })
+    })
+    */
+
+
+    db.collection('evaluations').where('activity', '==', '/activities/'+this.actividad.id).onSnapshot(snapshot => {
+      count_evaluations = snapshot.docs.length
+
+      snapshot.forEach(snapItem => {
+        const item = snapItem.data()
+        // console.log('evaluation', item)
+        this.evaluations.push(item)
+      })
+
     })
   },
   methods: {

@@ -14,22 +14,14 @@
                 :rows-per-page-items="[50]"
         >
           <template slot="items" slot-scope="props">
-            <td class="text-xs-left" v-if="typeof props.item.unit == 'string'">{{ props.item.unit }}</td>
-            <td class="text-xs-left">
-              <md-icon class="fa fa-thumbs-up" v-if="props.item.team_work"></md-icon>
-              <md-icon class="fa fa-thumbs-down" v-else></md-icon>
-            </td>
-            <td class="text-xs-left">
-              <md-icon class="fa fa-thumbs-up" v-if="props.item.timings"></md-icon>
-              <md-icon class="fa fa-thumbs-down" v-else></md-icon>
-            </td>
-            <td class="text-xs-left">
-              <md-icon class="fa fa-thumbs-up" v-if="props.item.presentation"></md-icon>
-              <md-icon class="fa fa-thumbs-down" v-else></md-icon>
-            </td>
-            <td class="text-xs-left">
-              <md-icon class="fa fa-thumbs-up" v-if="props.item.excellence"></md-icon>
-              <md-icon class="fa fa-thumbs-down" v-else></md-icon>
+            <td v-for="header in headers" :key="header.value" class="text-xs-left">
+              <div v-if="header.value != 'unit'">
+                <md-icon class="fa fa-thumbs-up" v-if="props.item[header.text]"></md-icon>
+                <md-icon class="fa fa-thumbs-down down" v-else></md-icon>
+              </div>
+              <div v-else>
+                {{ getUnitName(props.item[header.value]) }}
+              </div>
             </td>
           </template>
         </v-data-table>
@@ -39,6 +31,8 @@
 </template>
 
 <script>
+
+import {db} from '@/main'
 import Loader from '@/components/Utils/Loader'
 import tableUtilsMixin from '@/mixins/tableUtilsMixin'
 
@@ -52,6 +46,9 @@ export default {
     },
     evaluations: {
       type: Array
+    },
+    new_evaluations: {
+      type: Array
     }
   },
   components: {Loader},
@@ -60,26 +57,42 @@ export default {
       pagination: {
         sortBy: 'name'
       },
+      unitNames : [],
       headers: [
         {text: 'Unidad', value: 'unit', align: 'left'},
-        {text: 'Trabajo en Equipo', value: 'team_work', align: 'left'},
+        {text: 'Equipo', value: 'team_work', align: 'left'},
         {text: 'Tiempo', value: 'timings', align: 'left'},
-        {text: 'Presentación', value: 'presentation', align: 'left'},
+        {text: 'Participación', value: 'presentation', align: 'left'},
         {text: 'Excelencia', value: 'excellence', align: 'left'}
       ]
     }
   },
-  watch: {
-    evaluations: function (newval) {
-      newval.forEach((evaluation, index, array) => {
-        this.processed++
-        evaluation.unit.get().then(data => {
-          evaluation.unit = data.data().name
-        })
-        this.turnOffloader(array.length)
+  mounted() {
+    this.evaluations.forEach(item => {
+      let split = item.unit.split('/')
+      let unit = split[2]
+      var _this = this
+      db.collection('units').doc(unit).get().then(function(doc) {
+        const itemx = doc.data()
+        let forAdd = {
+          path : item.unit,
+          name: itemx.name
+        }
+        _this.unitNames.push(forAdd)
+
       })
+    })
+  },
+  methods: {
+    getUnitName (unitCode) {
+      var find = this.lodash.find(this.unitNames,{path: unitCode})
+      console.log(unitCode)
+      if( find != undefined){
+        return find.name
+      }
     }
   }
+
 }
 </script>
 
