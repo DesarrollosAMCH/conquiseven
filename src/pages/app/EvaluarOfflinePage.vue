@@ -226,8 +226,8 @@ export default {
           snapshot.forEach(snapItem => {
             this.snackbarReset()
             let frUnidad = db.collection('units').doc(snapItem.id)
-            let frActividad = db.collection('activities').doc(this.actividad.id)
-            db.collection('evaluations').where('unit', '==', frUnidad).where('activity', '==', frActividad).onSnapshot(snapshot => {
+            // let frActividad = db.collection('activities').doc(this.actividad.id)
+            db.collection('evaluations').where('unit', '==', frUnidad).where('activity', '==', '/activities/'+this.actividad.id).onSnapshot(snapshot => {
               if (snapshot.docs.length) {
                 // console.log('warning!')
                 this.warning()
