@@ -19,8 +19,11 @@
                 <md-icon class="fa fa-thumbs-up" v-if="props.item[header.text]"></md-icon>
                 <md-icon class="fa fa-thumbs-down down" v-else></md-icon>
               </div>
-              <div v-else>
+              <div v-else-if="unitNames.length > 0">
                 {{ getUnitName(props.item[header.value]) }}
+              </div>
+              <div v-else>
+                {{ props.item[header.value] }}
               </div>
             </td>
           </template>
@@ -67,7 +70,8 @@ export default {
       ]
     }
   },
-  mounted() {
+  mounted () {
+    console.log('evaluations',this.evaluations)
     this.evaluations.forEach(item => {
       let split = item.unit.split('/')
       let unit = split[2]
@@ -78,17 +82,23 @@ export default {
           path : item.unit,
           name: itemx.name
         }
+        console.log(forAdd)
         _this.unitNames.push(forAdd)
 
       })
+      console.log('unitNames',_this.unitNames)
     })
   },
   methods: {
     getUnitName (unitCode) {
-      var find = this.lodash.find(this.unitNames,{path: unitCode})
-      console.log(unitCode)
-      if( find != undefined){
-        return find.name
+      console.log('unitNames',this.unitNames)
+      console.log('unitCode',unitCode)
+      var found = this.lodash.find(this.unitNames,{path: unitCode})
+      if( found != undefined){
+        console.log(found)
+        return found.name
+      }else{
+        console.log('not found')
       }
     }
   }
