@@ -100,6 +100,7 @@ export default {
       this.event.get().then(value => {
         this.currentEvent = value.data()
       })
+      var _this = this
 
       snapshot.forEach(snapItem => {
         var activity = snapItem.data()
@@ -107,13 +108,15 @@ export default {
         activity.name = activity.name.replace(/\b\w/g, l => l.toUpperCase())
 
         // let actividad = db.collection('activities').doc(activity.id)
-        db.collection('evaluation').where('activity', '==', '/activities/' + activity.id).onSnapshot(snapshot => {
+        db.collection('evaluations').where('activity', '==', '/activities/' + activity.id).onSnapshot(snapshot => {
           activity.count_evaluations = snapshot.docs.length
+          console.log('activity',activity)
+          _this.activities.push(activity)
         })
-        this.activities.push(activity)
       })
     })
 
+    /*
     db.collection('unitsInEvents').where('event', '==', this.event).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length
       snapshot.forEach(snapItem => {
@@ -151,6 +154,7 @@ export default {
         })
       })
     })
+    */
     db.collection('unitsInEvents').where('event', '==', '/events/' + this.event.id).orderBy('clubName').onSnapshot(snapshot => {
       this.unitsCount = snapshot.docs.length
 
@@ -183,6 +187,13 @@ export default {
                 for (var prop in data) {
                   evaluation[prop] = data[prop]
                 }
+                // console.log("Evaluations: ",evaluations)
+                if( this.lodash.find(evaluations, { id: evaluation.id}) ){
+                  // console.log('eval repetida', evaluation)
+                }else{
+                  // console.log('eval no repetido', evaluation)
+                }
+
                 evaluations.push(evaluation)
               })
             })
